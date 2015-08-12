@@ -224,8 +224,8 @@ Public Class Overwatch
                         InBB = False
                     End If
                 Next
-            ElseIf KVPList.Contains("yahoo") Then
-               
+            ElseIf KVPList.Contains("Yahoo") Then
+
             Else
                 InExcel = False
                 InYahoo = False
