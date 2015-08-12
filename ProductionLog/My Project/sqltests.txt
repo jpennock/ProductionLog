@@ -1,0 +1,1 @@
+SELECT workflow.jobid,employee.empfirst,workflow.job,workflow.quantity,time_to_sec(timediff(timecompleted,timestarted))/60/60 as hours,workflow.quantity/time_to_sec(timediff(timecompleted,timestarted))*60*60 as fte from workflow inner join employee on workflow.empid=employee.empid Where workflow.timecompleted is not null order by quantity desc

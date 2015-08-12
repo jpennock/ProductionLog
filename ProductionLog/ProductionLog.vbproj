@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E9948FF0-11E9-4648-81CD-5549DBC259D5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>ProductionLog.My.MyApplication</StartupObject>
+    <RootNamespace>ProductionLog</RootNamespace>
+    <AssemblyName>ProductionLog</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>\\192.168.1.10\PL_Share\PrimaLend\Primalend Production Log\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>\\192.168.1.10\PL_Share\PrimaLend\Primalend Production Log\</InstallUrl>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationVersion>0.5.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>ProductionLog.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>ProductionLog.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Primalend.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>8AC1EAA1A5FE9448F160F9B3C4125AED93A2DD0D</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>ProductionLog_1_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Fabric.Plugin">
+      <HintPath>..\packages\MySql.Fabric.6.9.6\lib\net45\MySql.Fabric.Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web">
+      <HintPath>..\packages\MySql.Web.6.9.6\lib\net45\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenPop">
+      <HintPath>..\packages\OpenPop.NET.2.0.6.1076\lib\net40\OpenPop.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\FLATUI.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Clerk.Designer.vb">
+      <DependentUpon>Clerk.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Clerk.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CollateralLog.Designer.vb">
+      <DependentUpon>CollateralLog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CollateralLog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dashboard.Designer.vb">
+      <DependentUpon>Dashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dashboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DBA.Designer.vb">
+      <DependentUpon>DBA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DBA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EndJob.Designer.vb">
+      <DependentUpon>EndJob.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EndJob.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FileCabinetPopup.Designer.vb">
+      <DependentUpon>FileCabinetPopup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FileCabinetPopup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LogOn.Designer.vb">
+      <DependentUpon>LogOn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LogOn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LogTutorial.Designer.vb">
+      <DependentUpon>LogTutorial.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LogTutorial.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainParent.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainParent.Designer.vb">
+      <DependentUpon>MainParent.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Manager.Designer.vb">
+      <DependentUpon>Manager.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Manager.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Otto.Designer.vb">
+      <DependentUpon>Otto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Otto.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OttoMail.Designer.vb">
+      <DependentUpon>OttoMail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OttoMail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Overwatch.Designer.vb">
+      <DependentUpon>Overwatch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Overwatch.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PullRequest.Designer.vb">
+      <DependentUpon>PullRequest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PullRequest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Reassign.Designer.vb">
+      <DependentUpon>Reassign.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Reassign.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SendError.Designer.vb">
+      <DependentUpon>SendError.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SendError.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShowQuery.Designer.vb">
+      <DependentUpon>ShowQuery.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ShowQuery.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Splash.Designer.vb">
+      <DependentUpon>Splash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Splash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TeamLead.Designer.vb">
+      <DependentUpon>TeamLead.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TeamLead.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TheCIFR.Designer.vb">
+      <DependentUpon>TheCIFR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TheCIFR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VariancePopUp.Designer.vb">
+      <DependentUpon>VariancePopUp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VariancePopUp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VerifyStillHere.Designer.vb">
+      <DependentUpon>VerifyStillHere.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VerifyStillHere.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Viewer.Designer.vb">
+      <DependentUpon>Viewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Viewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Whiteboard.Designer.vb">
+      <DependentUpon>Whiteboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Whiteboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TimeLogDBDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TimeLogDBDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TimeLogDBDataSet.vb">
+      <DependentUpon>TimeLogDBDataSet.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\Clerk.resx">
+      <DependentUpon>Clerk.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CollateralLog.resx">
+      <DependentUpon>CollateralLog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dashboard.resx">
+      <DependentUpon>Dashboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DBA.resx">
+      <DependentUpon>DBA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EndJob.resx">
+      <DependentUpon>EndJob.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FileCabinetPopup.resx">
+      <DependentUpon>FileCabinetPopup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogOn.resx">
+      <DependentUpon>LogOn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogTutorial.resx">
+      <DependentUpon>LogTutorial.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainParent.resx">
+      <DependentUpon>MainParent.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Manager.resx">
+      <DependentUpon>Manager.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Otto.resx">
+      <DependentUpon>Otto.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OttoMail.resx">
+      <DependentUpon>OttoMail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Overwatch.resx">
+      <DependentUpon>Overwatch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PullRequest.resx">
+      <DependentUpon>PullRequest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Reassign.resx">
+      <DependentUpon>Reassign.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SendError.resx">
+      <DependentUpon>SendError.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShowQuery.resx">
+      <DependentUpon>ShowQuery.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Splash.resx">
+      <DependentUpon>Splash.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TeamLead.resx">
+      <DependentUpon>TeamLead.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TheCIFR.resx">
+      <DependentUpon>TheCIFR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VariancePopUp.resx">
+      <DependentUpon>VariancePopUp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VerifyStillHere.resx">
+      <DependentUpon>VerifyStillHere.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Viewer.resx">
+      <DependentUpon>Viewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Whiteboard.resx">
+      <DependentUpon>Whiteboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="ProductionLog_1_TemporaryKey.pfx" />
+    <None Include="ProductionLog_TemporaryKey.pfx" />
+    <None Include="TimeLogDBDataSet.xsc">
+      <DependentUpon>TimeLogDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="TimeLogDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TimeLogDBDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TimeLogDBDataSet.xss">
+      <DependentUpon>TimeLogDBDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Primalend.ico" />
+    <None Include="Resources\logo-white.png" />
+    <None Include="Resources\FileCabinetHeader.jpg" />
+    <None Include="Resources\zanocabinet.png" />
+    <None Include="Resources\tulsacabinet.png" />
+    <None Include="Resources\standardcabinet.png" />
+    <None Include="Resources\seleccioncabinet.png" />
+    <None Include="Resources\royalcabinet.png" />
+    <None Include="Resources\regencycabinet.png" />
+    <None Include="Resources\pldscabinet.png" />
+    <None Include="Resources\paydaycabinet.png" />
+    <None Include="Resources\jrcabinet.png" />
+    <None Include="Resources\jarcabinet.png" />
+    <None Include="Resources\jakccabinet.png" />
+    <None Include="Resources\hometowncabinet.png" />
+    <None Include="Resources\highwaycabinet.png" />
+    <None Include="Resources\foreigncabinet.png" />
+    <None Include="Resources\floortitlecabinet.png" />
+    <None Include="Resources\eurospeedcabinet.png" />
+    <None Include="Resources\easycarcabinet.png" />
+    <None Include="Resources\dynastycabinet.png" />
+    <None Include="Resources\ccccabinet.png" />
+    <None Include="Resources\bgcabinet.png" />
+    <None Include="Resources\autoworldcabinet.png" />
+    <None Include="Resources\autolandcabinet.png" />
+    <None Include="Resources\autoflexcabinet.png" />
+    <None Include="Resources\aucscabinet.png" />
+    <None Include="Resources\approvedcabinet.png" />
+    <None Include="Resources\adoniscabinet.png" />
+    <None Include="Resources\absolutecabinet.png" />
+    <None Include="Resources\aaacabinet.png" />
+    <None Include="Resources\200westcabinet.png" />
+    <None Include="Resources\4yourcarcabinet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
