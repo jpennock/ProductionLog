@@ -19,6 +19,8 @@ Public Class Dashboard
     Dim SqlConnectionString As String = "Server=192.168.1.34; Database=TimeLogDB; User id=clerk; Password=12345;" 'NUC Database
     Dim StillHya As Boolean = False
 
+
+
     Private Sub Dashboard_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
 
     End Sub
@@ -97,13 +99,22 @@ Public Class Dashboard
     End Sub
 
     Private Sub ManagerButton_Click(sender As Object, e As EventArgs) Handles ManagerButton.Click
-        If IDLabel.Text = 0 Then
-            MsgBox("Log in through the work queue")
-            Exit Sub
-        ElseIf IDLabel.Text = 1 Or IDLabel.Text = 12 Or IDLabel.Text = 2 Or IDLabel.Text = 10 Or IDLabel.Text = 8 Or IDLabel.Text = 9 Or IDLabel.Text = 11 Or IDLabel.Text = 32 Then
-            TeamLead.Show()
-        End If
-
+        Try
+            Dim Query As String = "SELECT * FROM `employee` where isMonitored=1"
+            Dim TeamAdapt As New MySqlDataAdapter(Query, SqlConnectionString)
+            Dim TeamTable As New DataTable
+            TeamAdapt.Fill(TeamTable)
+            If TeamTable.Rows.Count > 0 Then
+                For i = 0 To TeamTable.Rows.Count - 1
+                    If IDLabel.Text = TeamTable.Rows(i)(0).ToString Then
+                        'MsgBox(TeamTable.Rows(i)(0).ToString & " " & IDLabel.Text)
+                        TeamLead.Show()
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 
     Private Sub WhiteboardButton_Click(sender As Object, e As EventArgs) Handles WhiteboardButton.Click 'Pull Requests

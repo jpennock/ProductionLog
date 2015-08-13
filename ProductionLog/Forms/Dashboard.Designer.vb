@@ -60,7 +60,7 @@ Partial Class Dashboard
         Me.FormSkin1.Controls.Add(Me.ManagerButton)
         Me.FormSkin1.Controls.Add(Me.CollateralButton)
         Me.FormSkin1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FormSkin1.FlatColor = System.Drawing.Color.Red
+        Me.FormSkin1.FlatColor = System.Drawing.Color.SteelBlue
         Me.FormSkin1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
         Me.FormSkin1.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(49, Byte), Integer))
         Me.FormSkin1.HeaderMaximize = False
@@ -80,7 +80,7 @@ Partial Class Dashboard
         Me.VersionLabel.Name = "VersionLabel"
         Me.VersionLabel.Size = New System.Drawing.Size(31, 13)
         Me.VersionLabel.TabIndex = 9
-        Me.VersionLabel.Text = "0.5.5"
+        Me.VersionLabel.Text = "0.5.6"
         '
         'FlatButton1
         '
