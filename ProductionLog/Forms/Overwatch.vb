@@ -14,7 +14,7 @@ Imports System.Threading
 '7/9/15 Multithreading is a success. THE PALANTIR IS ACTIVE, THEY ARE NOT ALL ACCOUNTED FOR.
 'Some obvious issues thus far: Opening multiple excel windows. The program currently only sees and holds on to the first one it finds, I am trying to work on a dropbox idea that may help
 'with how things are handled, but I'm not sure if that will really work. The best way to handle this is only allow one job at a time.
-'as of 8/6/15 the drop box is mostly functional. 
+'as of 8/6/15 the drop box is mostly functional, but it can't seem to clear out the programs that are exited.
 '
 Public Class Overwatch
     Dim SqlConnectionString As String = "Server=192.168.1.34; Database=TimeLogDB; User id=clerk; Password=12345;" 'NUC Database <--Being used now
