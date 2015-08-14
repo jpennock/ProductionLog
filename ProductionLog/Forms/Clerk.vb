@@ -60,6 +60,7 @@ Public Class Clerk
                 ClockTimeLabel.Text = ClockTable.Rows(0)(2).ToString
                 ClockInButton.Visible = False
                 ClockInButton.Enabled = False
+                ShowButton.Visible = True
             End If
         Catch ex As Exception
             MsgBox(ex.ToString)
