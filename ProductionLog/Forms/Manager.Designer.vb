@@ -92,6 +92,7 @@ Partial Class Manager
         Me.NewsLabel.Size = New System.Drawing.Size(380, 32)
         Me.NewsLabel.TabIndex = 45
         Me.NewsLabel.Text = "Possible News Text in this ZONE"
+        Me.NewsLabel.Visible = False
         '
         'PictureBox3
         '

@@ -31,6 +31,7 @@ Partial Class Clerk
         Me.LoginSuccessTimer = New System.Windows.Forms.Timer(Me.components)
         Me.QueueTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.FlatButton1 = New ProductionLog.FlatButton()
         Me.ReAssignLabel = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
@@ -72,7 +73,6 @@ Partial Class Clerk
         Me.QAList = New System.Windows.Forms.ListBox()
         Me.StartButton = New ProductionLog.FlatButton()
         Me.JobList = New System.Windows.Forms.ListBox()
-        Me.FlatButton1 = New ProductionLog.FlatButton()
         Me.FormSkin1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -142,6 +142,20 @@ Partial Class Clerk
         Me.FormSkin1.Size = New System.Drawing.Size(520, 374)
         Me.FormSkin1.TabIndex = 0
         Me.FormSkin1.Text = "Work Queue"
+        '
+        'FlatButton1
+        '
+        Me.FlatButton1.BackColor = System.Drawing.Color.Transparent
+        Me.FlatButton1.BaseColor = System.Drawing.Color.Red
+        Me.FlatButton1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.FlatButton1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.FlatButton1.Location = New System.Drawing.Point(493, -3)
+        Me.FlatButton1.Name = "FlatButton1"
+        Me.FlatButton1.Rounded = False
+        Me.FlatButton1.Size = New System.Drawing.Size(27, 25)
+        Me.FlatButton1.TabIndex = 44
+        Me.FlatButton1.Text = "X"
+        Me.FlatButton1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
         'ReAssignLabel
         '
@@ -413,7 +427,7 @@ Partial Class Clerk
         Me.LogoutButton.BaseColor = System.Drawing.Color.Tomato
         Me.LogoutButton.Cursor = System.Windows.Forms.Cursors.Hand
         Me.LogoutButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.LogoutButton.Location = New System.Drawing.Point(11, 60)
+        Me.LogoutButton.Location = New System.Drawing.Point(158, 24)
         Me.LogoutButton.Name = "LogoutButton"
         Me.LogoutButton.Rounded = False
         Me.LogoutButton.Size = New System.Drawing.Size(80, 24)
@@ -426,7 +440,7 @@ Partial Class Clerk
         '
         Me.SuccessLabel.AutoSize = True
         Me.SuccessLabel.BackColor = System.Drawing.Color.LightGreen
-        Me.SuccessLabel.Location = New System.Drawing.Point(12, 90)
+        Me.SuccessLabel.Location = New System.Drawing.Point(12, 60)
         Me.SuccessLabel.Name = "SuccessLabel"
         Me.SuccessLabel.Size = New System.Drawing.Size(69, 21)
         Me.SuccessLabel.TabIndex = 19
@@ -448,7 +462,7 @@ Partial Class Clerk
         '
         Me.ClockTimeLabel.AutoSize = True
         Me.ClockTimeLabel.BackColor = System.Drawing.Color.Transparent
-        Me.ClockTimeLabel.Location = New System.Drawing.Point(7, 200)
+        Me.ClockTimeLabel.Location = New System.Drawing.Point(7, 178)
         Me.ClockTimeLabel.Name = "ClockTimeLabel"
         Me.ClockTimeLabel.Size = New System.Drawing.Size(0, 21)
         Me.ClockTimeLabel.TabIndex = 17
@@ -457,7 +471,7 @@ Partial Class Clerk
         '
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.Location = New System.Drawing.Point(7, 179)
+        Me.Label7.Location = New System.Drawing.Point(6, 154)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(85, 21)
         Me.Label7.TabIndex = 16
@@ -469,7 +483,7 @@ Partial Class Clerk
         Me.ClockOutButton.BaseColor = System.Drawing.Color.SteelBlue
         Me.ClockOutButton.Cursor = System.Windows.Forms.Cursors.Hand
         Me.ClockOutButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.ClockOutButton.Location = New System.Drawing.Point(12, 152)
+        Me.ClockOutButton.Location = New System.Drawing.Point(11, 118)
         Me.ClockOutButton.Name = "ClockOutButton"
         Me.ClockOutButton.Rounded = False
         Me.ClockOutButton.Size = New System.Drawing.Size(80, 24)
@@ -483,7 +497,7 @@ Partial Class Clerk
         Me.ClockInButton.BaseColor = System.Drawing.Color.SteelBlue
         Me.ClockInButton.Cursor = System.Windows.Forms.Cursors.Hand
         Me.ClockInButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.ClockInButton.Location = New System.Drawing.Point(12, 122)
+        Me.ClockInButton.Location = New System.Drawing.Point(11, 88)
         Me.ClockInButton.Name = "ClockInButton"
         Me.ClockInButton.Rounded = False
         Me.ClockInButton.Size = New System.Drawing.Size(80, 24)
@@ -574,7 +588,7 @@ Partial Class Clerk
         Me.LoginButton.BaseColor = System.Drawing.Color.DarkOliveGreen
         Me.LoginButton.Cursor = System.Windows.Forms.Cursors.Hand
         Me.LoginButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.LoginButton.Location = New System.Drawing.Point(12, 60)
+        Me.LoginButton.Location = New System.Drawing.Point(158, 21)
         Me.LoginButton.Name = "LoginButton"
         Me.LoginButton.Rounded = False
         Me.LoginButton.Size = New System.Drawing.Size(80, 24)
@@ -631,20 +645,6 @@ Partial Class Clerk
         Me.JobList.Name = "JobList"
         Me.JobList.Size = New System.Drawing.Size(110, 109)
         Me.JobList.TabIndex = 0
-        '
-        'FlatButton1
-        '
-        Me.FlatButton1.BackColor = System.Drawing.Color.Transparent
-        Me.FlatButton1.BaseColor = System.Drawing.Color.Red
-        Me.FlatButton1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.FlatButton1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.FlatButton1.Location = New System.Drawing.Point(493, -3)
-        Me.FlatButton1.Name = "FlatButton1"
-        Me.FlatButton1.Rounded = False
-        Me.FlatButton1.Size = New System.Drawing.Size(27, 25)
-        Me.FlatButton1.TabIndex = 44
-        Me.FlatButton1.Text = "X"
-        Me.FlatButton1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
         'Clerk
         '
