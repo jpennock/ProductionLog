@@ -37,6 +37,7 @@ Partial Class Manager
         Me.ManagementTimer = New System.Windows.Forms.Timer(Me.components)
         Me.SuccessTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.NewsLabel = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.WorkTree = New System.Windows.Forms.TreeView()
@@ -60,6 +61,7 @@ Partial Class Manager
         Me.FormSkin1.BackColor = System.Drawing.Color.White
         Me.FormSkin1.BaseColor = System.Drawing.Color.Black
         Me.FormSkin1.BorderColor = System.Drawing.Color.Black
+        Me.FormSkin1.Controls.Add(Me.NewsLabel)
         Me.FormSkin1.Controls.Add(Me.PictureBox3)
         Me.FormSkin1.Controls.Add(Me.PictureBox2)
         Me.FormSkin1.Controls.Add(Me.WorkTree)
@@ -79,6 +81,18 @@ Partial Class Manager
         Me.FormSkin1.Size = New System.Drawing.Size(1600, 900)
         Me.FormSkin1.TabIndex = 0
         '
+        'NewsLabel
+        '
+        Me.NewsLabel.AutoSize = True
+        Me.NewsLabel.BackColor = System.Drawing.Color.Transparent
+        Me.NewsLabel.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.NewsLabel.ForeColor = System.Drawing.Color.Transparent
+        Me.NewsLabel.Location = New System.Drawing.Point(637, 865)
+        Me.NewsLabel.Name = "NewsLabel"
+        Me.NewsLabel.Size = New System.Drawing.Size(380, 32)
+        Me.NewsLabel.TabIndex = 45
+        Me.NewsLabel.Text = "Possible News Text in this ZONE"
+        '
         'PictureBox3
         '
         Me.PictureBox3.BackColor = System.Drawing.Color.Black
@@ -92,7 +106,7 @@ Partial Class Manager
         '
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(670, 544)
+        Me.PictureBox2.Location = New System.Drawing.Point(670, 689)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(564, 109)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -108,7 +122,7 @@ Partial Class Manager
         TreeNode1.Name = "ClientNode"
         TreeNode1.Text = "Clients"
         Me.WorkTree.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1})
-        Me.WorkTree.Size = New System.Drawing.Size(286, 481)
+        Me.WorkTree.Size = New System.Drawing.Size(286, 619)
         Me.WorkTree.TabIndex = 42
         '
         'Label1
@@ -135,7 +149,7 @@ Partial Class Manager
         TreeNode4.Name = "FrozenNode"
         TreeNode4.Text = "DO NOT FUND"
         Me.ScheduleTreeview.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode2, TreeNode3, TreeNode4})
-        Me.ScheduleTreeview.Size = New System.Drawing.Size(286, 481)
+        Me.ScheduleTreeview.Size = New System.Drawing.Size(286, 619)
         Me.ScheduleTreeview.TabIndex = 40
         '
         'Label2
@@ -227,4 +241,5 @@ Partial Class Manager
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
     Friend WithEvents PictureBox3 As System.Windows.Forms.PictureBox
+    Friend WithEvents NewsLabel As System.Windows.Forms.Label
 End Class

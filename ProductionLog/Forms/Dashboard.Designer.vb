@@ -80,7 +80,7 @@ Partial Class Dashboard
         Me.VersionLabel.Name = "VersionLabel"
         Me.VersionLabel.Size = New System.Drawing.Size(31, 13)
         Me.VersionLabel.TabIndex = 9
-        Me.VersionLabel.Text = "0.5.7"
+        Me.VersionLabel.Text = "0.5.8"
         '
         'FlatButton1
         '

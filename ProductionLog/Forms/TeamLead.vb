@@ -84,11 +84,19 @@ Public Class TeamLead
     End Sub
 
     Public Function Refreshme()
+        Dim TeamID As Integer = 0
+        Dim TeamTable As New DataTable
+        Dim TeamQuery As String = "SELECT isWolfPack from employee where empid='" & EmpIDLabel.Text & "'"
+        Dim TeamAdapt As New MySqlDataAdapter(TeamQuery, SqlConnectionString)
+        TeamAdapt.Fill(TeamTable)
+        If TeamTable.Rows.Count > 0 Then
+            TeamID = TeamTable.Rows(0)(0)
+        End If
         Dim LogTable As New DataTable
         Dim Logquery As String = "SELECT EmpID,Empfirst from Employee where islogin='1' and isclockin='1' Order By Empfirst"
         Dim LogAdapt As New MySqlDataAdapter(Logquery, SqlConnectionString)
         Dim WorkflowTable As New DataTable
-        Dim WFQuery As String = "SELECT Workflow.JobID,Workflow.Dealer,Employee.Empfirst,workflow.job,workflow.dateassigned,workflow.timestarted from Workflow inner join employee ON workflow.empid=employee.empid where datecompleted is null order by employee.empfirst"
+        Dim WFQuery As String = "SELECT Workflow.JobID,Workflow.Dealer,Employee.Empfirst,workflow.job,workflow.dateassigned,workflow.timestarted from Workflow inner join employee ON workflow.empid=employee.empid where datecompleted is null and employee.iswolfpack=" & TeamID & " order by employee.empfirst"
         Dim QATable As New DataTable
         Dim QAQuery As String = "SELECT QA.QAID,QA.Dealership,Employee.Empfirst from QA inner join employee on qa.empid=employee.empid where timestarted is null and datecompleted is null order by employee.empfirst"
         Dim WFAdapt As New MySqlDataAdapter(WFQuery, SqlConnectionString)
@@ -219,7 +227,7 @@ Public Class TeamLead
             SuccessLabel.Visible = True
             SuccessSeconds += 1
         End If
-        
+
 
     End Sub
 
