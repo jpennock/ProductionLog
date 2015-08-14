@@ -25,11 +25,11 @@ Partial Class Overwatch
         Me.components = New System.ComponentModel.Container()
         Me.Palantiri = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.BBComboBox = New System.Windows.Forms.ComboBox()
         Me.EmpIDLabel = New System.Windows.Forms.Label()
         Me.DealershipLabel = New System.Windows.Forms.Label()
         Me.MiniButton = New ProductionLog.FlatButton()
         Me.FlatClose1 = New ProductionLog.FlatClose()
-        Me.BBComboBox = New System.Windows.Forms.ComboBox()
         Me.FormSkin1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -48,14 +48,24 @@ Partial Class Overwatch
         Me.FormSkin1.Controls.Add(Me.MiniButton)
         Me.FormSkin1.Controls.Add(Me.FlatClose1)
         Me.FormSkin1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FormSkin1.FlatColor = System.Drawing.Color.SteelBlue
+        Me.FormSkin1.FlatColor = System.Drawing.Color.Red
         Me.FormSkin1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
         Me.FormSkin1.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(49, Byte), Integer))
         Me.FormSkin1.HeaderMaximize = False
         Me.FormSkin1.Location = New System.Drawing.Point(0, 0)
         Me.FormSkin1.Name = "FormSkin1"
-        Me.FormSkin1.Size = New System.Drawing.Size(289, 71)
+        Me.FormSkin1.Size = New System.Drawing.Size(289, 60)
         Me.FormSkin1.TabIndex = 0
+        '
+        'BBComboBox
+        '
+        Me.BBComboBox.BackColor = System.Drawing.Color.Gray
+        Me.BBComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.BBComboBox.FormattingEnabled = True
+        Me.BBComboBox.Location = New System.Drawing.Point(29, 10)
+        Me.BBComboBox.Name = "BBComboBox"
+        Me.BBComboBox.Size = New System.Drawing.Size(158, 29)
+        Me.BBComboBox.TabIndex = 4
         '
         'EmpIDLabel
         '
@@ -105,21 +115,11 @@ Partial Class Overwatch
         Me.FlatClose1.Text = "FlatClose1"
         Me.FlatClose1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
-        'BBComboBox
-        '
-        Me.BBComboBox.BackColor = System.Drawing.Color.Gray
-        Me.BBComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.BBComboBox.FormattingEnabled = True
-        Me.BBComboBox.Location = New System.Drawing.Point(29, 10)
-        Me.BBComboBox.Name = "BBComboBox"
-        Me.BBComboBox.Size = New System.Drawing.Size(158, 29)
-        Me.BBComboBox.TabIndex = 4
-        '
         'Overwatch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(289, 71)
+        Me.ClientSize = New System.Drawing.Size(289, 60)
         Me.Controls.Add(Me.FormSkin1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Overwatch"

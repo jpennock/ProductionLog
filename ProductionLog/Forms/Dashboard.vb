@@ -48,6 +48,7 @@ Public Class Dashboard
                 Connection.Open()
                 Connection.Close()
             End Using
+            Overwatch.Show()
             'Dim Table As New DataTable
             'Dim Query As String = "SELECT BugMessage from BugTracker where BugID='1'"
             'Dim Adapt As New MySqlDataAdapter(Query, SqlConnectionString)

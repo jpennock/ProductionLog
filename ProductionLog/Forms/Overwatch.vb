@@ -137,6 +137,10 @@ Public Class Overwatch
         End If
     End Sub
     Public Sub Scan()
+        'Filetable is a one time fill table that shows what the BB names should be. Use this to check to see if the excel file opened is one of our BBs
+        'Checktable will be the data in the combo box, to verify if these windows are still open.
+        'FileCheckTable is the table that I will use to verify the name of the BB opened with the names of the BBs in the database. 
+        'This one can change, since it should just be what is currently opened.
         Dim KVPList As New List(Of String)()
         Dim FileList As New List(Of String)()
         While 1
@@ -145,15 +149,10 @@ Public Class Overwatch
             KVPList.Clear()
             FileList.Clear()
             CheckTable.Clear()
+            FileCheckTable.Clear()
             If BBComboBox.Items.Count > 0 Then
                 For i = 0 To BBComboBox.Items.Count - 1
-                    CheckTable.Rows.Add(BBComboBox.Items(i).ToString)
-                    CheckTable.Rows(i)(1) = "f"
-                Next
-            End If
-            If FileCheckTable.Rows.Count > 0 Then
-                For i = 0 To FileCheckTable.Rows.Count - 1
-                    FileCheckTable.Rows(i)(1) = "f"
+                    CheckTable.Rows.Add({BBComboBox.Items(i).ToString, "f"})
                 Next
             End If
             For Each P As Process In Process.GetProcesses
@@ -178,82 +177,71 @@ Public Class Overwatch
                         KVPList.Add(tosplit(1).ToString.Trim.ToLower)
                         KVPList.Add(tosplit(0).ToString.Trim.ToLower)
                         FileList.Add(tosplit(0).ToString.Trim)
-                        FileCheckTable.Rows.Add(tosplit(0).ToString.Trim)
+                        FileCheckTable.Rows.Add({tosplit(0).ToString.Trim, "f"}) 'I'll try using F to start showing that it shouldn't be added to the list? Then if it qualifies, add it to the list, otherwise leave it alone.
                     End If
                 Next
             Next
             If KVPList.Contains("excel") Then
-                InExcel = True
-                For i = 0 To FileTable.Rows.Count - 2
-                    If FileList.Contains(FileTable(i)(0).ToString) Then
-                        'If BBComboBox.Items.Contains(FileTable(i)(0).ToString) Then 'check to see if you need to add the excel file open to the combobox.
-                        'Else
-                        '    AddComboItem(BBComboBox, FileTable(i)(0).ToString)
-                        'End If
-                        If CheckTable.Rows.Count > 0 Then
-                            For c = 0 To CheckTable.Rows.Count - 1
-                                Dim checkit As String = CheckTable.Rows(c)(0).ToString
-                                For FC = 0 To FileTable.Rows.Count - 1
-                                    If checkit = FileCheckTable(FC)(0).ToString Then
-                                        FileCheckTable(FC)(1) = "t"
-                                        CheckTable.Rows(c)(1) = "t"
-                                    End If
-                                Next
-                            Next
-                            For R = FileCheckTable.Rows.Count - 1 To 0 Step -1
-                                If FileCheckTable.Rows(R)(1) = "t" Then
-                                Else
-                                    FileCheckTable.Rows.RemoveAt(R)
-                                End If
-                            Next
-                            For R = CheckTable.Rows.Count - 1 To 0 Step -1
-                                'MsgBox(CheckTable.Rows(R)(1).ToString)
-                                If CheckTable.Rows(R)(1) = "t" Then
-                                Else
-                                    RemoveComboItem(BBComboBox, R)
-                                End If
-                            Next
-
-                        Else
-                            AddComboItem(BBComboBox, FileCheckTable(i)(0).ToString)
+                For i = 0 To FileCheckTable.Rows.Count - 1 'first check which ones match the BB database.
+                    For bb = 0 To FileTable.Rows.Count - 1
+                        If FileCheckTable.Rows(i)(0).ToString = FileTable.Rows(bb)(0).ToString Then
+                            FileCheckTable.Rows(i)(1) = "b" 'if they have a b, work from there.
                         End If
-                        'CurrentBB = FileTable(i)(0)
-                        InBB = True
-                        GoTo SLEEPYTIME
-                    Else
-                        InBB = False
+                    Next
+                Next
+                If CheckTable.Rows.Count > 0 Then
+                    For i = CheckTable.Rows.Count - 1 To 0 Step -1 'check this list against the current combo box contents (backwards for no reason. I was going to try and delete it right away, but that wouldn't work :( )
+                        For ck = 0 To FileCheckTable.Rows.Count - 1
+                            If CheckTable.Rows(i)(0) = FileCheckTable.Rows(ck)(0) Then
+                                CheckTable.Rows(i)(1) = "t" 't for true. If true, I'll leave it in. If the F is still there, toast.
+                            End If
+                        Next
+                    Next
+                    For i = CheckTable.Rows.Count - 1 To 0 Step -1 'use this one to remove any checktable item that is marked f still, proving that you aren't currently open in any of those windows
+                        If CheckTable.Rows(i)(1) = "f" Then
+                            ' MsgBox("remove")
+                            RemoveComboItem(BBComboBox, i)
+                        End If
+                    Next
+                End If
+                For i = 0 To FileCheckTable.Rows.Count - 1
+                    If FileCheckTable.Rows(i)(1) = "b" Then
+                        'MsgBox("add")
+                        AddComboItem(BBComboBox, FileCheckTable.Rows(i)(0).ToString)
                     End If
                 Next
-            ElseIf KVPList.Contains("Yahoo") Then
-
+                InExcel = True
             Else
+                RemoveComboItem(BBComboBox, 0) 'the index here will have to be dynamic in order to properly remove the item.
                 InExcel = False
-                InYahoo = False
             End If
 SLEEPYTIME:
             'Counter += 1
-            Thread.Sleep(1000)
+            Thread.Sleep(500)
         End While
     End Sub
 
     Public Sub AddComboItem(ByVal ComboObject As ComboBox, ByVal Value As String)
-        If ComboObject.InvokeRequired Then
-            Dim dlg As New AddComboItemDelegate(AddressOf AddComboItem)
-            Me.Invoke(dlg, ComboObject, Value)
-        Else
-            ComboObject.Items.Add(Value)
-            ComboObject.SelectedIndex = ComboObject.Items.Count - 1
+        If Not ComboObject.Items.Contains(Value) Then
+            If ComboObject.InvokeRequired Then
+                Dim dlg As New AddComboItemDelegate(AddressOf AddComboItem)
+                Me.Invoke(dlg, ComboObject, Value)
+            Else
+                ComboObject.Items.Add(Value)
+                ComboObject.SelectedIndex = ComboObject.Items.Count - 1
+            End If
         End If
     End Sub
 
     Public Sub RemoveComboItem(ByVal ComboObject As ComboBox, ByVal Index As Integer)
-        If ComboObject.InvokeRequired Then
-            Dim dlg As New RemoveComboItemDelegate(AddressOf RemoveComboItem)
-            Me.Invoke(dlg, ComboObject, Index)
-        Else
-            ComboObject.Items.RemoveAt(Index)
+        If ComboObject.Items.Count > 0 Then
+            If ComboObject.InvokeRequired Then
+                Dim dlg As New RemoveComboItemDelegate(AddressOf RemoveComboItem)
+                Me.Invoke(dlg, ComboObject, Index)
+            Else
+                ComboObject.Items.RemoveAt(Index)
+            End If
         End If
-
     End Sub
 
     Public Sub SetLabelText(ByVal LabelObject As Label, ByVal Value As String)
@@ -264,8 +252,15 @@ SLEEPYTIME:
             LabelObject.Text = Value
         End If
     End Sub
-
     Private Sub MiniButton_Click(sender As Object, e As EventArgs) Handles MiniButton.Click
-        MsgBox(Counter)
+        Try
+            If Me.Size.Height = 60 Then
+                Me.Size = New Size(Me.Size.Width, 600)
+            Else
+                Me.Size = New Size(Me.Size.Width, 60)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 End Class

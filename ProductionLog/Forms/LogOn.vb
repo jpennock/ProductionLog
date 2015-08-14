@@ -23,6 +23,7 @@ Public Class LogOn 'The Login screen will check to see if the employee's PIN is 
                         Exit Sub
                     Else
                         Dashboard.Show()
+                        Overwatch.EmpIDLabel.Text = PINDT.Rows(0)(0)
                         Dashboard.IDLabel.Text = PINDT.Rows(0)(0)
                         Me.Hide()
                     End If
