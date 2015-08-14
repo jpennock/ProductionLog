@@ -72,6 +72,7 @@ Partial Class Clerk
         Me.QAList = New System.Windows.Forms.ListBox()
         Me.StartButton = New ProductionLog.FlatButton()
         Me.JobList = New System.Windows.Forms.ListBox()
+        Me.FlatButton1 = New ProductionLog.FlatButton()
         Me.FormSkin1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,6 +90,7 @@ Partial Class Clerk
         Me.FormSkin1.BackColor = System.Drawing.Color.White
         Me.FormSkin1.BaseColor = System.Drawing.Color.Gray
         Me.FormSkin1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(53, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(60, Byte), Integer))
+        Me.FormSkin1.Controls.Add(Me.FlatButton1)
         Me.FormSkin1.Controls.Add(Me.ReAssignLabel)
         Me.FormSkin1.Controls.Add(Me.Label1)
         Me.FormSkin1.Controls.Add(Me.PictureBox2)
@@ -131,7 +133,7 @@ Partial Class Clerk
         Me.FormSkin1.Controls.Add(Me.StartButton)
         Me.FormSkin1.Controls.Add(Me.JobList)
         Me.FormSkin1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FormSkin1.FlatColor = System.Drawing.Color.SteelBlue
+        Me.FormSkin1.FlatColor = System.Drawing.Color.Red
         Me.FormSkin1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
         Me.FormSkin1.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(49, Byte), Integer))
         Me.FormSkin1.HeaderMaximize = False
@@ -436,7 +438,7 @@ Partial Class Clerk
         Me.EmployeeID.AutoSize = True
         Me.EmployeeID.BackColor = System.Drawing.Color.Transparent
         Me.EmployeeID.ForeColor = System.Drawing.Color.White
-        Me.EmployeeID.Location = New System.Drawing.Point(493, 1)
+        Me.EmployeeID.Location = New System.Drawing.Point(460, 1)
         Me.EmployeeID.Name = "EmployeeID"
         Me.EmployeeID.Size = New System.Drawing.Size(19, 21)
         Me.EmployeeID.TabIndex = 18
@@ -579,6 +581,7 @@ Partial Class Clerk
         Me.LoginButton.TabIndex = 6
         Me.LoginButton.Text = "Login"
         Me.LoginButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.LoginButton.Visible = False
         '
         'EndButton
         '
@@ -628,6 +631,20 @@ Partial Class Clerk
         Me.JobList.Name = "JobList"
         Me.JobList.Size = New System.Drawing.Size(110, 109)
         Me.JobList.TabIndex = 0
+        '
+        'FlatButton1
+        '
+        Me.FlatButton1.BackColor = System.Drawing.Color.Transparent
+        Me.FlatButton1.BaseColor = System.Drawing.Color.Red
+        Me.FlatButton1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.FlatButton1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.FlatButton1.Location = New System.Drawing.Point(493, -3)
+        Me.FlatButton1.Name = "FlatButton1"
+        Me.FlatButton1.Rounded = False
+        Me.FlatButton1.Size = New System.Drawing.Size(27, 25)
+        Me.FlatButton1.TabIndex = 44
+        Me.FlatButton1.Text = "X"
+        Me.FlatButton1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
         'Clerk
         '
@@ -692,4 +709,5 @@ Partial Class Clerk
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
     Friend WithEvents ReAssignLabel As System.Windows.Forms.Label
+    Friend WithEvents FlatButton1 As ProductionLog.FlatButton
 End Class

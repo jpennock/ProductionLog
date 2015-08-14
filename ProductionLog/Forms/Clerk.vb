@@ -16,7 +16,7 @@ Public Class Clerk
     Dim SelectedNode As TreeNode
     Dim InAJob As Boolean = False
 
-    
+
 
 
 
@@ -50,6 +50,20 @@ Public Class Clerk
         JobTreeView.Nodes.Add("BB")
         JobTreeView.Nodes.Add("Collateral")
         JobTreeView.Nodes.Add("QA")
+        Try
+            EmployeeID.Text = Dashboard.IDLabel.Text
+            Dim ClockTable As New DataTable
+            Dim ClockQuery As String = "SELECT * From TimeClock where TimeOut is null and EmpID = '" & EmployeeID.Text & "'"
+            Dim ClockAdapt As New MySqlDataAdapter(ClockQuery, SqlConnectionString)
+            ClockAdapt.Fill(ClockTable)
+            If ClockTable.Rows.Count > 0 Then
+                ClockTimeLabel.Text = ClockTable.Rows(0)(2).ToString
+                ClockInButton.Visible = False
+                ClockInButton.Enabled = False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 
     Private Sub LoginSuccessTimer_Tick(sender As Object, e As EventArgs) Handles LoginSuccessTimer.Tick
@@ -498,7 +512,7 @@ Public Class Clerk
     End Sub
 
     Private Sub MyJobsRadio_CheckedChanged(sender As Object)
-        
+
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles MyJobsRadio.CheckedChanged
@@ -756,5 +770,10 @@ Public Class Clerk
                 SendError.ErrorRTB.Text = ex.ToString
             End Try
         End If
+    End Sub
+
+    Private Sub FlatButton1_Click_3(sender As Object, e As EventArgs) Handles FlatButton1.Click
+        Me.Dispose()
+        Dashboard.CollateralButton.Enabled = True
     End Sub
 End Class

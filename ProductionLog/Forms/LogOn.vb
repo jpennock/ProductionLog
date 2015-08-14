@@ -13,7 +13,7 @@ Public Class LogOn 'The Login screen will check to see if the employee's PIN is 
             If PasswordBox.Text = "" Then 'if they didn't type anything in, don't continue
                 Exit Sub
             Else
-                Try 'Try to find their PIN in the DB
+                Try 'Try to find their PIN                
                     Dim Query As String = "SELECT EmpID FROM PINS WHERE PIN=" & PasswordBox.Text
                     Dim PinAdapt As New MySqlDataAdapter(Query, SqlConnectionString)
                     Dim PINDT As New DataTable
@@ -22,55 +22,16 @@ Public Class LogOn 'The Login screen will check to see if the employee's PIN is 
                         MsgBox("Couldn't find you!", vbOKOnly, "Primalend Production Log")
                         Exit Sub
                     Else
-                        Clerk.EmployeeID.Text = PINDT.Rows(0)(0)
-                        Dashboard.IDLabel.Text = Clerk.EmployeeID.Text
-                        Clerk.LoginButton.Visible = False
-                        Clerk.LogoutButton.Visible = True
-                        Try 'Check to see if they are clocked in still
-                            Dim ClockQuery As String = "SELECT * From TimeClock Where EmpID=" & PINDT.Rows(0)(0) & " AND TimeOut IS NULL"
-                            Dim ClockAdapt As New MySqlDataAdapter(ClockQuery, SqlConnectionString)
-                            Dim ClockDT As New DataTable
-                            ClockAdapt.Fill(ClockDT)
-                            'MsgBox(ClockDT.Rows.Count) This was checking the row count for the following lines of code.
-                            If ClockDT.Rows.Count < 1 Then 'if there isn't an entry for an open timeclock then just log in
-                                Clerk.LoginSuccessTimer.Enabled = True
-                                Me.Dispose()
-                                'clerk.refreshme()
-                            Else 'else, display the timeclock information to the employee
-                                Clerk.ClockInButton.Enabled = False
-                                Clerk.ClockInButton.Visible = False
-                                Clerk.ClockTimeLabel.Text = ClockDT.Rows(0)(2).ToString
-                                Clerk.LoginSuccessTimer.Enabled = True
-                                Clerk.ShowButton.Visible = True
-                                ''clerk.refreshme()
-                                Me.Dispose()
-                            End If
-                            Try
-                                Using Connection As New MySqlConnection(SqlConnectionString)
-                                    Dim LoginQuery As String = "UPDATE Employee SET IsLogin=True WHERE EmpID=" & Clerk.EmployeeID.Text
-                                    Dim LoginCommand As New MySqlCommand(LoginQuery, Connection)
-                                    Connection.Open()
-                                    LoginCommand.ExecuteNonQuery()
-                                    Connection.Close()
-                                End Using
-                                'clerk.refreshme()
-                            Catch ex As Exception
-                                MsgBox("Had trouble showing you as logged in on the server, please let your manager know " & ex.ToString)
-                            End Try
-                        Catch ex As Exception
-                            Clerk.LoginSuccessTimer.Enabled = True
-                            'Clerk.QueueTimer.Enabled = True
-                            Me.Dispose()
-                        End Try
+                        Dashboard.Show()
+                        Dashboard.IDLabel.Text = PINDT.Rows(0)(0)
+                        Me.Hide()
                     End If
-                    'clerk.refreshme()
                 Catch ex As Exception
-                    MsgBox("Couldn't find you!", vbOKOnly, "Oops!")
-                    Exit Sub
+                    MsgBox(ex.ToString)
                 End Try
             End If
+
         End If
-        
 
     End Sub
 

@@ -69,7 +69,6 @@ Public Class Dashboard
 
     Private Sub CollateralButton_Click(sender As Object, e As EventArgs) Handles CollateralButton.Click
         Clerk.Show()
-        CollateralButton.BaseColor = Color.DarkSlateBlue
         CollateralButton.Enabled = False
     End Sub
 
