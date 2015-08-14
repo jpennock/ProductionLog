@@ -91,12 +91,12 @@ Public Class OttoMail
                                 thefolder = "P:\Treasury Management\Funding\" & NowDate & "\" & Message.Headers.From.Address.ToString & " " & Message.Headers.Subject & "\"
                                 Dim filetype = msgpart.ContentType
                                 Dim contentid = msgpart.ContentId
-                                System.IO.Directory.CreateDirectory(thefolder)
+                                'System.IO.Directory.CreateDirectory(thefolder)
                                 'Using sw As StreamWriter = File.CreateText(thebodypath)
                                 '    sw.WriteLine(DerString)
                                 'End Using
-                                System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
-                                Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
+                                'System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
+                                'Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
                             Catch ex As Exception
                                 MsgBox(ex.ToString)
                             End Try
