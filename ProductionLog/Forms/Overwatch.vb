@@ -32,7 +32,6 @@ Public Class Overwatch
     Dim CheckTable As New DataTable 'I'm going to try and fill this with the data in combo box and then use it to verify what should and shouldn't be in the drop box.
     Dim FileCheckTable As New DataTable 'Check the file list?
 
-
     <DllImport("user32.dll", SetLastError:=True)> _
     Private Shared Function SetWindowPos(ByVal hWnd As IntPtr, ByVal hWndInsertAfter As IntPtr, ByVal X As Integer, ByVal Y As Integer, ByVal cx As Integer, ByVal cy As Integer, ByVal uFlags As Integer) As Boolean
     End Function
@@ -111,7 +110,6 @@ Public Class Overwatch
         EnumWindows(AddressOf enumWindowsInternal, 0)
         Return dictWindows
     End Function
-
     Private Sub Overwatch_Load(sender As Object, e As EventArgs) Handles Me.Load
         MakeTopMost()
         FileAdapt.Fill(FileTable) 'Hopefully you won't have to fill this one more than once per load. I'll make sure that is the case through some tests
@@ -122,9 +120,7 @@ Public Class Overwatch
         Palintir_Thread = New Thread(AddressOf Scan)
         Palintir_Thread.IsBackground = True
         Palintir_Thread.Start()
-        
     End Sub
-
     Private Sub Palantiri_Tick(sender As Object, e As EventArgs) Handles Palantiri.Tick
         If InExcel = True And InBB = True Then
             SetLabelText(DealershipLabel, CurrentBB)
@@ -181,11 +177,12 @@ Public Class Overwatch
                     End If
                 Next
             Next
-            If KVPList.Contains("excel") Then
+            If KVPList.Contains("excel") Or KVPList.Contains("access") Then
                 For i = 0 To FileCheckTable.Rows.Count - 1 'first check which ones match the BB database.
                     For bb = 0 To FileTable.Rows.Count - 1
                         If FileCheckTable.Rows(i)(0).ToString = FileTable.Rows(bb)(0).ToString Then
                             FileCheckTable.Rows(i)(1) = "b" 'if they have a b, work from there.
+                            FileCheckTable.Rows(i)(0) = FileTable.Rows(bb)(1).ToString
                         End If
                     Next
                 Next
