@@ -175,8 +175,10 @@ Public Class Dashboard
     End Sub
 
     Private Sub FlatButton1_Click_2(sender As Object, e As EventArgs) Handles FlatButton1.Click
-        Manager.Show()
+        'Manager.Show()
         'Overwatch.Show()
+        DBA.Show()
         'MsgBox(DateTime.Today.DayOfWeek)
+
     End Sub
 End Class
