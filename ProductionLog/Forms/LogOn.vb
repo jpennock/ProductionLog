@@ -16,6 +16,10 @@ Public Class LogOn 'The Login screen will check to see if the employee's PIN is 
                     Dim PinAdapt As New MySqlDataAdapter(Query, SqlConnectionString)
                     Dim PINDT As New DataTable
                     PinAdapt.Fill(PINDT)
+                    Dim TeamQuery As String = "Select iswolfpack from employee where empid='" & PINDT.Rows(0)(0) & "'"
+                    Dim TeamAdapt As New MySqlDataAdapter(TeamQuery, SqlConnectionString)
+                    Dim Teamtable As New DataTable
+                    TeamAdapt.Fill(Teamtable)
                     If IsDBNull(PINDT.Rows(0)(0)) Then 'if the PIN isn't found, let them know and clear the SUB for them to try again.
                         MsgBox("Couldn't find you!", vbOKOnly, "Primalend Production Log")
                         Exit Sub
@@ -28,6 +32,16 @@ Public Class LogOn 'The Login screen will check to see if the employee's PIN is 
                             connect.Close()
                         End Using
                         Dashboard.Show()
+                        If Teamtable.Rows(0)(0) = 1 Or Teamtable.Rows(0)(0) = 9 Then
+                            Dashboard.FlatButton1.Visible = True
+                        Else
+                            Dashboard.FlatButton1.Visible = False
+                        End If
+                        If Teamtable.Rows(0)(0) = 9 Then
+                            Dashboard.OttoButton.Visible = True
+                        Else
+                            Dashboard.OttoButton.Visible = False
+                        End If
                         Overwatch.EmpIDLabel.Text = PINDT.Rows(0)(0)
                         Dashboard.IDLabel.Text = PINDT.Rows(0)(0)
                         Me.Hide()

@@ -15,8 +15,12 @@ Imports System.Threading
 'Some obvious issues thus far: Opening multiple excel windows. The program currently only sees and holds on to the first one it finds, I am trying to work on a dropbox idea that may help
 'with how things are handled, but I'm not sure if that will really work. The best way to handle this is only allow one job at a time.
 'as of 8/6/15 the drop box is mostly functional, but it can't seem to clear out the programs that are exited.
-'
+'8/18/15 The watching code is working fully. It always knows what excel file you are in and which one you close out of. 
+
 Public Class Overwatch
+    Dim TimerInt As Integer = 0
+    Dim inJob As Boolean = False
+    Dim IsTopMost As Boolean = False
     Dim SqlConnectionString As String = "Server=192.168.1.34; Database=TimeLogDB; User id=clerk; Password=12345;" 'NUC Database <--Being used now
     Dim FileQuery As String = "SELECT BBFileName,Dealership from Dealername" 'Get the borrowing base file names
     Dim FileTable As New DataTable 'this table will hold the bb file names
@@ -44,10 +48,14 @@ Public Class Overwatch
 
     Public Function MakeTopMost()
         SetWindowPos(Me.Handle(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE)
+        IsTopMost = True
+        Return Nothing
     End Function
 
     Public Function MakeNormal()
         SetWindowPos(Me.Handle(), HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE)
+        IsTopMost = False
+        Return Nothing
     End Function
 
     <DllImport("USER32.DLL")> _
@@ -111,7 +119,19 @@ Public Class Overwatch
         Return dictWindows
     End Function
     Private Sub Overwatch_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        Dim scr = Screen.FromPoint(Me.Location)
+        Me.Location = New Point(scr.WorkingArea.Right - Me.Width, scr.WorkingArea.Top)
+
+        Dim InJobQuery As String = "SELECT JobID From Workflow where empid='" & EmpIDLabel.Text & "' and job like '%CIFR%' and datestarted is not null and datecompleted is null"
+        Dim InJobTable As New DataTable
+        Dim InJobAdapt As New MySqlDataAdapter(InJobQuery, SqlConnectionString)
+        InJobAdapt.Fill(InJobTable)
+        If InJobTable.Rows.Count > 0 Then
+            inJob = True
+        End If
         MakeTopMost()
+        IsTopMost = True
         FileAdapt.Fill(FileTable) 'Hopefully you won't have to fill this one more than once per load. I'll make sure that is the case through some tests
         CheckTable.Columns.Add("Name")
         CheckTable.Columns.Add("Remove")
@@ -122,14 +142,12 @@ Public Class Overwatch
         Palintir_Thread.Start()
     End Sub
     Private Sub Palantiri_Tick(sender As Object, e As EventArgs) Handles Palantiri.Tick
-        If InExcel = True And InBB = True Then
-            SetLabelText(DealershipLabel, CurrentBB)
-        ElseIf InExcel = True And InBB = False Then
-            SetLabelText(DealershipLabel, "Excel")
-        ElseIf InYahoo = True Then
-            SetLabelText(DealershipLabel, "Yahoo?")
-        ElseIf InExcel = False Then
-            SetLabelText(DealershipLabel, "")
+        If Me.Size.Height = 600 And TimerInt < 3 Then
+            MinimizeLabel.Visible = True
+            TimerInt += 1
+        Else
+            Palantiri.Stop()
+            MinimizeLabel.Visible = False
         End If
     End Sub
     Public Sub Scan()
@@ -226,6 +244,9 @@ SLEEPYTIME:
             Else
                 ComboObject.Items.Add(Value)
                 ComboObject.SelectedIndex = ComboObject.Items.Count - 1
+                If inJob = False Then
+                    ShowJobs()
+                End If
             End If
         End If
     End Sub
@@ -251,13 +272,80 @@ SLEEPYTIME:
     End Sub
     Private Sub MiniButton_Click(sender As Object, e As EventArgs) Handles MiniButton.Click
         Try
+            If IsTopMost = True Then
+                MakeNormal()
+            Else
+                MakeTopMost()
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ExpandButton.Click
+        Try
             If Me.Size.Height = 60 Then
                 Me.Size = New Size(Me.Size.Width, 600)
+                'ExpandButton.Location = New Point(103, 590)
             Else
                 Me.Size = New Size(Me.Size.Width, 60)
+                'ExpandButton.Location = New Point(103, 50)
             End If
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
+    End Sub
+
+    Private Sub BBComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles BBComboBox.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub BBComboBox_TextChanged(sender As Object, e As EventArgs) Handles BBComboBox.TextChanged
+
+    End Sub
+
+    Public Function ShowJobs() 'I can get things to interact and change the actual overwatch form, but I can't get other forms to pop up or do what I need. :( 8/18/15
+        Try
+            Dim JobTable As New DataTable
+            Dim JobQuery As String = "SELECT JobID,BatchID,DateAssigned,Dealer,Job,Quantity From workflow where dealer='" & BBComboBox.Items(BBComboBox.SelectedIndex).ToString & "' and job like '%CIFR%' and datecompleted is null"
+            Dim JobAdapt As New MySqlDataAdapter(JobQuery, SqlConnectionString)
+            JobAdapt.Fill(JobTable)
+            If JobTable.Rows.Count > 1 Then 'If there is more than one CIFR job available.
+                FileCabinetPopup.Show()
+                For i = 0 To JobTable.Rows.Count - 1
+                    FileCabinetPopup.JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString)
+                Next
+                For c = FileCabinetPopup.JobCheckListBox.Items.Count - 1 To 0 Step -1
+                    FileCabinetPopup.JobCheckListBox.SetItemChecked(c, True)
+                Next
+
+            ElseIf JobTable.Rows.Count = 1 Then 'If there is only the one CIFR job available, assign that one.
+                MsgBox("Just one")
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+        'Try
+        '    TimerInt = 0
+        '    Palantiri.Start()
+        '    Me.Size = New Size(Me.Size.Width, 600)
+        '    FileCabinetPopup.Show()
+        'Catch ex As Exception
+        '    MsgBox(ex.ToString)
+        'End Try
+        Return Nothing
+    End Function
+
+    Private Sub FlatClose1_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub ExpandButton_MouseHover(sender As Object, e As EventArgs) Handles ExpandButton.MouseHover
+
+    End Sub
+
+    Private Sub FlatButton1_Click(sender As Object, e As EventArgs)
+        Me.Dispose()
     End Sub
 End Class

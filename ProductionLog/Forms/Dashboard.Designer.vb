@@ -88,7 +88,7 @@ Partial Class Dashboard
         Me.FlatButton1.BaseColor = System.Drawing.Color.SteelBlue
         Me.FlatButton1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.FlatButton1.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.FlatButton1.Location = New System.Drawing.Point(47, 0)
+        Me.FlatButton1.Location = New System.Drawing.Point(368, 24)
         Me.FlatButton1.Name = "FlatButton1"
         Me.FlatButton1.Rounded = False
         Me.FlatButton1.Size = New System.Drawing.Size(48, 19)

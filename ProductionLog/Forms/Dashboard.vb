@@ -43,12 +43,15 @@ Public Class Dashboard
     End Sub
 
     Private Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Try 'Test the mysql connection, to see if I need to convert completely this weekend :)
+        Try 'Test the mysql connection, to see if I need to convert completely this weekend :) (8/18/15 Don't remember why I wrote this first part, but I like keeping it here.)
             Using Connection As New MySqlConnection(SqlConnectionString)
                 Connection.Open()
                 Connection.Close()
             End Using
-            Overwatch.Show()
+
+            'Overwatch.Show() 'remove this comment line to enable the palantir
+
+
             'Dim Table As New DataTable
             'Dim Query As String = "SELECT BugMessage from BugTracker where BugID='1'"
             'Dim Adapt As New MySqlDataAdapter(Query, SqlConnectionString)
@@ -56,6 +59,8 @@ Public Class Dashboard
             'If Table.Rows.Count > 0 Then
 
             'End If
+
+
         Catch ex As Exception
             SendError.Show()
             SendError.EmpIDLabel.Text = "14"

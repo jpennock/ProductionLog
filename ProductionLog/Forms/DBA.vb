@@ -46,18 +46,7 @@ Public Class DBA
                     .DisplayMember = "VIN"
                     .ValueMember = "VIN"
                 End With
-                Dim rng As New Random
-                Dim number As Integer = rng.Next(1, 1000)
-                Dim digits As String = number.ToString("D3")
-                Dim datedata As String = DateTime.Now.Month & DateTime.Now.Day & DateTime.Now.Minute
-                If DealershipComboBox.Text = "" Then
-                    BatchIDLabel.Text = ""
-                    Exit Sub
-                Else
-                    Dim Dealer As String = DealershipComboBox.Text.Replace(" ", "")
-                    Dim batchstring As String = Dealer(0) & Dealer(1) & Dealer(Dealer.Length - 2) & Dealer(Dealer.Length - 1) 'First 2 characters, last two characters.
-                    BatchIDLabel.Text = batchstring & datedata & digits
-                End If
+                BatchIDMaker()
             End If
         Catch ex As Exception
             MsgBox(ex.ToString)
@@ -66,15 +55,25 @@ Public Class DBA
 
     Private Sub VinTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles VinTextBox.KeyPress
         If e.KeyChar = Convert.ToChar(13) Then
+            'MsgBox(FullVinComboBox.SelectedValue)
             If VinTextBox.Text = "" Or DealershipComboBox.Text = "" Or CollateralComboBox.Text = "" Then
-                Exit Sub
-            ElseIf CollateralList.Items.Contains(FullVinComboBox.SelectedValue.ToString) Then
-                MsgBox("Vin already in list.", vbOKOnly, "Oops!")
                 Exit Sub
             Else
                 DealershipComboBox.Enabled = False
                 CollateralComboBox.Enabled = False
-                CollateralList.Items.Insert(0, FullVinComboBox.SelectedValue.ToString)
+                If FullVinComboBox.SelectedValue <> "" Then
+                    If CollateralList.Items.Contains(FullVinComboBox.SelectedValue.ToString) Then
+                        MsgBox("Vin already in list.", vbOKOnly, "Oops!")
+                        Exit Sub
+                    End If
+                    CollateralList.Items.Insert(0, FullVinComboBox.SelectedValue.ToString)
+                Else
+                    If CollateralList.Items.Contains(VinTextBox.Text) Then
+                        MsgBox("Vin already in list.", vbOKOnly, "Oops!")
+                        Exit Sub
+                    End If
+                    CollateralList.Items.Insert(0, VinTextBox.Text)
+                End If
                 VinTextBox.Text = ""
             End If
             CountBox.Text = CollateralList.Items.Count
@@ -100,13 +99,39 @@ Public Class DBA
     End Sub
 
     Private Sub AddButton_Click(sender As Object, e As EventArgs) Handles AddButton.Click
-        If CollateralList.Items.Count < 1 Then
+        If CollateralList.Items.Count < 1 Or BatchIDLabel.Text = "" Then
             Exit Sub
         Else
             Try
-
+                Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
+                Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
+                Dim QueryBuilt As New StringBuilder
+                QueryBuilt.Append("INSERT INTO Batch (BatchID,EmpID,Dealership,Collateral,VIN6,DateReceived,Timereceived) VALUES")
+                For i = 0 To CollateralList.Items.Count - 1
+                    If i = CollateralList.Items.Count - 1 Then
+                        QueryBuilt.Append("('" & BatchIDLabel.Text & "','" & Dashboard.IDLabel.Text & "','" & DealershipComboBox.Text & "','" & CollateralComboBox.Text & "','" & CollateralList.Items(i) & "','" & NowDate & "','" & NowTime & "');")
+                    Else
+                        QueryBuilt.Append("('" & BatchIDLabel.Text & "','" & Dashboard.IDLabel.Text & "','" & DealershipComboBox.Text & "','" & CollateralComboBox.Text & "','" & CollateralList.Items(i) & "','" & NowDate & "','" & NowTime & "'),")
+                    End If
+                Next
+                Using Connection As New MySqlConnection(SqlConnectionString)
+                    Dim command As New MySqlCommand(QueryBuilt.ToString, Connection)
+                    Connection.Open()
+                    command.ExecuteNonQuery()
+                    Connection.Close()
+                End Using
+                CollateralList.Items.Clear()
+                BatchIDLabel.Text = ""
+                BatchIDMaker()
+                DealershipComboBox.Enabled = True
+                DealershipComboBox.Text = ""
+                CollateralComboBox.Enabled = True
+                SuccessTimer.Enabled = True
+                CountBox.Enabled = True
+                CountBox.Text = ""
+                Me.Enabled = True
             Catch ex As Exception
-
+                MsgBox(ex.ToString)
             End Try
         End If
     End Sub
@@ -114,9 +139,26 @@ Public Class DBA
     Private Sub FlatButton2_Click(sender As Object, e As EventArgs) Handles FlatButton2.Click
         Try
             CollateralList.Items.RemoveAt(CollateralList.SelectedIndex)
-
+            CountBox.Text = CollateralList.Items.Count
         Catch ex As Exception
-
+            MsgBox(ex.ToString)
         End Try
     End Sub
+    Public Function BatchIDMaker()
+        Dim rng As New Random
+        Dim number As Integer = rng.Next(1, 1000)
+        Dim digits As String = number.ToString("D3")
+        Dim datedata As String = DateTime.Now.Month & DateTime.Now.Day & DateTime.Now.Minute
+        If DealershipComboBox.Text = "" Then
+            BatchIDLabel.Text = ""
+            Return Nothing
+            Exit Function
+        Else
+            Dim Dealer As String = DealershipComboBox.Text.Replace(" ", "")
+            Dim batchstring As String = Dealer(0) & Dealer(1) & Dealer(Dealer.Length - 2) & Dealer(Dealer.Length - 1) 'First 2 characters, last two characters.
+            BatchIDLabel.Text = batchstring & datedata & digits
+        End If
+        Return Nothing
+    End Function
+
 End Class

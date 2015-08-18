@@ -104,6 +104,7 @@ Partial Class DBA
         '
         Me.CountBox.Location = New System.Drawing.Point(16, 303)
         Me.CountBox.Name = "CountBox"
+        Me.CountBox.ReadOnly = True
         Me.CountBox.Size = New System.Drawing.Size(46, 29)
         Me.CountBox.TabIndex = 17
         '
@@ -162,9 +163,9 @@ Partial Class DBA
         Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.Location = New System.Drawing.Point(12, 164)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(36, 21)
+        Me.Label3.Size = New System.Drawing.Size(174, 21)
         Me.Label3.TabIndex = 8
-        Me.Label3.Text = "VIN"
+        Me.Label3.Text = "VIN (VIN 6 if not found)"
         '
         'Label2
         '

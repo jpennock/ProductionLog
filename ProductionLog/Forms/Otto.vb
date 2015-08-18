@@ -800,70 +800,70 @@ Neither:
     End Sub
 
     Private Sub TitleAuditTimer_Tick(sender As Object, e As EventArgs) Handles TitleAuditTimer.Tick
-        If ETitleCheck = False Then 'Set up the e-title check jobs 2 days before the BB (I think sending them to GINA will work best, then whoever logs on first PRIMARY or SECONDARY will get the job and can re-assign from there)
-            Try
-                Dim Todayint As Integer = DateTime.Today.DayOfWeek 'day of the week in integer form (0-6)
-                Dim Query As String = "SELECT Dealership,schedule,isetitle,titleauditcomplete from Dealername where isetitle='1' and titleauditcomplete='1'"
-                Dim Table As New DataTable
-                Dim Adapt As New MySqlDataAdapter(Query, SqlConnectionString)
-                Adapt.Fill(Table)
-                If Table.Rows.Count > 0 Then
-                    For i = 0 To Table.Rows.Count - 1
-                        If Table(i)(1) = "0" Then
-                            If Todayint = 1 Then
-                                Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
-                                Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
-                                Dim InsertZero As String = "INSERT INTO Workflow (EmpID,BatchID,DateAssigned,TimeAssigned,Dealer,Job,Quantity) VALUES('12','EVerify(" & Todayint & ")','" & NowDate & "','" & NowTime & "','" & Table(i)(0) & "','Title Verifications','1');"
-                                Using Connection As New MySqlConnection(SqlConnectionString)
-                                    Dim Command As New MySqlCommand(InsertZero, Connection)
-                                    Connection.Open()
-                                    Command.ExecuteNonQuery()
-                                    Connection.Close()
-                                End Using
-                            End If
-                        ElseIf Todayint = Table(i)(1) - 2 Then
-                            Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
-                            Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
-                            Dim InsertOther As String = "INSERT INTO Workflow (EmpID,BatchID,DateAssigned,TimeAssigned,Dealer,Job,Quantity"
-                        End If
-                    Next
-                End If
-                LogTextBox.AppendText(vbNewLine & "assigned e-title verification jobs @ " & TimeOfDay)
-                ETitleCheck = True
-            Catch ex As Exception
-                LogTextBox.AppendText(vbNewLine & "couldn't assign e-title review job @ " & TimeOfDay)
-            End Try
-        Else
-            If TimeOfDay = "12:00:00 AM" Then
-                ETitleCheck = False
-            End If
-        End If
-        If TitleTeamCheck = False Then 'set up jobs for the title team to check the google drive for any request from dealerships to do TMRs
-            Try
-                Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
-                Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
-                Dim TeamInsert As String = "INSERT INTO Workflow (Empid,DateAssigned,TimeAssigned,Job,Dealer,Quantity) Values('2','" & NowDate & "','" & NowTime & "','Check Google Drive','Primalend','1'),('9','" & NowDate & "','" & NowTime & "','Check Google Drive','Primalend','1'),('13','" & NowDate & "','" & NowTime & "','Check Google Drive','Primalend','1');"
-                Using Connection As New MySqlConnection(SqlConnectionString)
-                    Dim Command As New MySqlCommand(TeamInsert, Connection)
-                    Connection.Open()
-                    Command.ExecuteNonQuery()
-                    Connection.Close()
-                End Using
-                TitleTeamCheck = True
-                LogTextBox.AppendText(vbNewLine & "set up the title team's Google Drive Check job @ " & TimeOfDay)
-            Catch ex As Exception
-                MsgBox(ex.ToString)
-                LogTextBox.AppendText(vbNewLine & "had trouble with the title team's job set up @ " & TimeOfDay)
-            End Try
-        Else
-            If TimeOfDay = "12:00:00 AM" Then
-                Try
-                    TitleTeamCheck = False
-                Catch ex As Exception
+        'If ETitleCheck = False Then 'Set up the e-title check jobs 2 days before the BB (I think sending them to GINA will work best, then whoever logs on first PRIMARY or SECONDARY will get the job and can re-assign from there)
+        '    Try
+        '        Dim Todayint As Integer = DateTime.Today.DayOfWeek 'day of the week in integer form (0-6)
+        '        Dim Query As String = "SELECT Dealership,schedule,isetitle,titleauditcomplete from Dealername where isetitle='1' and titleauditcomplete='1'"
+        '        Dim Table As New DataTable
+        '        Dim Adapt As New MySqlDataAdapter(Query, SqlConnectionString)
+        '        Adapt.Fill(Table)
+        '        If Table.Rows.Count > 0 Then
+        '            For i = 0 To Table.Rows.Count - 1
+        '                If Table(i)(1) = "0" Then
+        '                    If Todayint = 1 Then
+        '                        Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
+        '                        Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
+        '                        Dim InsertZero As String = "INSERT INTO Workflow (EmpID,BatchID,DateAssigned,TimeAssigned,Dealer,Job,Quantity) VALUES('12','EVerify(" & Todayint & ")','" & NowDate & "','" & NowTime & "','" & Table(i)(0) & "','Title Verifications','1');"
+        '                        Using Connection As New MySqlConnection(SqlConnectionString)
+        '                            Dim Command As New MySqlCommand(InsertZero, Connection)
+        '                            Connection.Open()
+        '                            Command.ExecuteNonQuery()
+        '                            Connection.Close()
+        '                        End Using
+        '                    End If
+        '                ElseIf Todayint = Table(i)(1) - 2 Then
+        '                    Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
+        '                    Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
+        '                    Dim InsertOther As String = "INSERT INTO Workflow (EmpID,BatchID,DateAssigned,TimeAssigned,Dealer,Job,Quantity"
+        '                End If
+        '            Next
+        '        End If
+        '        LogTextBox.AppendText(vbNewLine & "assigned e-title verification jobs @ " & TimeOfDay)
+        '        ETitleCheck = True
+        '    Catch ex As Exception
+        '        LogTextBox.AppendText(vbNewLine & "couldn't assign e-title review job @ " & TimeOfDay)
+        '    End Try
+        'Else
+        '    If TimeOfDay = "12:00:00 AM" Then
+        '        ETitleCheck = False
+        '    End If
+        'End If
+        'If TitleTeamCheck = False Then 'set up jobs for the title team to check the google drive for any request from dealerships to do TMRs
+        '    Try
+        '        Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
+        '        Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
+        '        Dim TeamInsert As String = "INSERT INTO Workflow (Empid,DateAssigned,TimeAssigned,Job,Dealer,Quantity) Values('2','" & NowDate & "','" & NowTime & "','Check Google Drive','Primalend','1'),('9','" & NowDate & "','" & NowTime & "','Check Google Drive','Primalend','1'),('13','" & NowDate & "','" & NowTime & "','Check Google Drive','Primalend','1');"
+        '        Using Connection As New MySqlConnection(SqlConnectionString)
+        '            Dim Command As New MySqlCommand(TeamInsert, Connection)
+        '            Connection.Open()
+        '            Command.ExecuteNonQuery()
+        '            Connection.Close()
+        '        End Using
+        '        TitleTeamCheck = True
+        '        LogTextBox.AppendText(vbNewLine & "set up the title team's Google Drive Check job @ " & TimeOfDay)
+        '    Catch ex As Exception
+        '        MsgBox(ex.ToString)
+        '        LogTextBox.AppendText(vbNewLine & "had trouble with the title team's job set up @ " & TimeOfDay)
+        '    End Try
+        'Else
+        '    If TimeOfDay = "12:00:00 AM" Then
+        '        Try
+        '            TitleTeamCheck = False
+        '        Catch ex As Exception
 
-                End Try
-            End If
-        End If
+        '        End Try
+        '    End If
+        'End If
         If VerificationOut = False Then 'set up the verifications for the borrowing bases (1 day before the borrowing base)
             Try
                 Dim QueryBuilt As New StringBuilder
