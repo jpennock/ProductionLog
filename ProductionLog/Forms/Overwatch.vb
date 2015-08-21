@@ -305,27 +305,30 @@ SLEEPYTIME:
 
     End Sub
 
-    Public Function ShowJobs() 'I can get things to interact and change the actual overwatch form, but I can't get other forms to pop up or do what I need. :( 8/18/15
-        Try
-            Dim JobTable As New DataTable
-            Dim JobQuery As String = "SELECT JobID,BatchID,DateAssigned,Dealer,Job,Quantity From workflow where dealer='" & BBComboBox.Items(BBComboBox.SelectedIndex).ToString & "' and job like '%CIFR%' and datecompleted is null"
-            Dim JobAdapt As New MySqlDataAdapter(JobQuery, SqlConnectionString)
-            JobAdapt.Fill(JobTable)
-            If JobTable.Rows.Count > 1 Then 'If there is more than one CIFR job available.
-                FileCabinetPopup.Show()
-                For i = 0 To JobTable.Rows.Count - 1
-                    FileCabinetPopup.JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString)
-                Next
-                For c = FileCabinetPopup.JobCheckListBox.Items.Count - 1 To 0 Step -1
-                    FileCabinetPopup.JobCheckListBox.SetItemChecked(c, True)
-                Next
+    Public Function ShowJobs() 'I can get things to interact and change the actual overwatch form, but I can't get other forms to pop up or do what I need. :( 8/18/15 Fixed 8/19/15
 
-            ElseIf JobTable.Rows.Count = 1 Then 'If there is only the one CIFR job available, assign that one.
-                MsgBox("Just one")
-            End If
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
+        FileCabinetPopup.Show()
+
+        'Try
+        '    Dim JobTable As New DataTable
+        '    Dim JobQuery As String = "SELECT JobID,BatchID,DateAssigned,Dealer,Job,Quantity From workflow where dealer='" & BBComboBox.Items(BBComboBox.SelectedIndex).ToString & "' and job like '%CIFR%' and datecompleted is null"
+        '    Dim JobAdapt As New MySqlDataAdapter(JobQuery, SqlConnectionString)
+        '    JobAdapt.Fill(JobTable)
+        '    If JobTable.Rows.Count > 1 Then 'If there is more than one CIFR job available.
+        '        FileCabinetPopup.Show()
+        '        For i = 0 To JobTable.Rows.Count - 1
+        '            FileCabinetPopup.JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString)
+        '        Next
+        '        For c = FileCabinetPopup.JobCheckListBox.Items.Count - 1 To 0 Step -1
+        '            FileCabinetPopup.JobCheckListBox.SetItemChecked(c, True)
+        '        Next
+
+        '    ElseIf JobTable.Rows.Count = 1 Then 'If there is only the one CIFR job available, assign that one.
+        '        MsgBox("Just one")
+        '    End If
+        'Catch ex As Exception
+        '    MsgBox(ex.ToString)
+        'End Try
         'Try
         '    TimerInt = 0
         '    Palantiri.Start()

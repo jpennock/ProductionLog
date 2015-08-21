@@ -31,7 +31,6 @@ Public Class LogOn 'The Login screen will check to see if the employee's PIN is 
                             logincommand.ExecuteNonQuery()
                             connect.Close()
                         End Using
-                        Dashboard.Show()
                         If Teamtable.Rows(0)(0) = 1 Or Teamtable.Rows(0)(0) = 9 Then
                             Dashboard.FlatButton1.Visible = True
                         Else
@@ -44,6 +43,7 @@ Public Class LogOn 'The Login screen will check to see if the employee's PIN is 
                         End If
                         Overwatch.EmpIDLabel.Text = PINDT.Rows(0)(0)
                         Dashboard.IDLabel.Text = PINDT.Rows(0)(0)
+                        Dashboard.Show()
                         Me.Hide()
                     End If
                 Catch ex As Exception

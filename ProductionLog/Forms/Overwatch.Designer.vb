@@ -25,6 +25,8 @@ Partial Class Overwatch
         Me.components = New System.ComponentModel.Container()
         Me.Palantiri = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.FlatClose1 = New ProductionLog.FlatClose()
         Me.MinimizeLabel = New System.Windows.Forms.Label()
         Me.ExpandButton = New System.Windows.Forms.Button()
@@ -32,8 +34,7 @@ Partial Class Overwatch
         Me.EmpIDLabel = New System.Windows.Forms.Label()
         Me.DealershipLabel = New System.Windows.Forms.Label()
         Me.MiniButton = New ProductionLog.FlatButton()
-        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.FlatButton1 = New ProductionLog.FlatButton()
         Me.FormSkin1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -47,6 +48,7 @@ Partial Class Overwatch
         Me.FormSkin1.BackColor = System.Drawing.Color.White
         Me.FormSkin1.BaseColor = System.Drawing.Color.Gray
         Me.FormSkin1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(53, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(60, Byte), Integer))
+        Me.FormSkin1.Controls.Add(Me.FlatButton1)
         Me.FormSkin1.Controls.Add(Me.Label1)
         Me.FormSkin1.Controls.Add(Me.CheckedListBox1)
         Me.FormSkin1.Controls.Add(Me.FlatClose1)
@@ -63,8 +65,30 @@ Partial Class Overwatch
         Me.FormSkin1.HeaderMaximize = False
         Me.FormSkin1.Location = New System.Drawing.Point(0, 0)
         Me.FormSkin1.Name = "FormSkin1"
-        Me.FormSkin1.Size = New System.Drawing.Size(289, 600)
+        Me.FormSkin1.Size = New System.Drawing.Size(289, 60)
         Me.FormSkin1.TabIndex = 0
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.ForeColor = System.Drawing.Color.Black
+        Me.Label1.Location = New System.Drawing.Point(98, 62)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(77, 21)
+        Me.Label1.TabIndex = 9
+        Me.Label1.Text = "CIFR Jobs"
+        Me.Label1.Visible = False
+        '
+        'CheckedListBox1
+        '
+        Me.CheckedListBox1.BackColor = System.Drawing.Color.Gray
+        Me.CheckedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.CheckedListBox1.FormattingEnabled = True
+        Me.CheckedListBox1.Location = New System.Drawing.Point(1, 86)
+        Me.CheckedListBox1.Name = "CheckedListBox1"
+        Me.CheckedListBox1.Size = New System.Drawing.Size(286, 146)
+        Me.CheckedListBox1.TabIndex = 8
         '
         'FlatClose1
         '
@@ -96,7 +120,7 @@ Partial Class Overwatch
         Me.ExpandButton.BackColor = System.Drawing.Color.Black
         Me.ExpandButton.Cursor = System.Windows.Forms.Cursors.Hand
         Me.ExpandButton.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.ExpandButton.Location = New System.Drawing.Point(0, 590)
+        Me.ExpandButton.Location = New System.Drawing.Point(0, 50)
         Me.ExpandButton.Name = "ExpandButton"
         Me.ExpandButton.Size = New System.Drawing.Size(289, 10)
         Me.ExpandButton.TabIndex = 5
@@ -149,33 +173,25 @@ Partial Class Overwatch
         Me.MiniButton.Text = "_"
         Me.MiniButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
-        'CheckedListBox1
+        'FlatButton1
         '
-        Me.CheckedListBox1.BackColor = System.Drawing.Color.Gray
-        Me.CheckedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(1, 86)
-        Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(286, 146)
-        Me.CheckedListBox1.TabIndex = 8
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(95, 61)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(77, 21)
-        Me.Label1.TabIndex = 9
-        Me.Label1.Text = "CIFR Jobs"
-        Me.Label1.Visible = False
+        Me.FlatButton1.BackColor = System.Drawing.Color.Transparent
+        Me.FlatButton1.BaseColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.FlatButton1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.FlatButton1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.FlatButton1.Location = New System.Drawing.Point(83, 238)
+        Me.FlatButton1.Name = "FlatButton1"
+        Me.FlatButton1.Rounded = False
+        Me.FlatButton1.Size = New System.Drawing.Size(104, 32)
+        Me.FlatButton1.TabIndex = 10
+        Me.FlatButton1.Text = "End Selected"
+        Me.FlatButton1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
         'Overwatch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(289, 600)
+        Me.ClientSize = New System.Drawing.Size(289, 60)
         Me.Controls.Add(Me.FormSkin1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Overwatch"
@@ -198,4 +214,5 @@ Partial Class Overwatch
     Friend WithEvents FlatClose1 As ProductionLog.FlatClose
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents CheckedListBox1 As System.Windows.Forms.CheckedListBox
+    Friend WithEvents FlatButton1 As ProductionLog.FlatButton
 End Class

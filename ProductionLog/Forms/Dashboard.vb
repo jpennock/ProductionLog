@@ -49,6 +49,17 @@ Public Class Dashboard
                 Connection.Close()
             End Using
 
+            Dim teamquery As String = "Select iswolfpack from employee where empid=" & IDLabel.Text
+            Dim teamadapt As New MySqlDataAdapter(teamquery, SqlConnectionString)
+            Dim teamtable As New DataTable
+            teamadapt.Fill(teamtable)
+
+            If teamtable.Rows.Count > 0 Then
+                If teamtable.Rows(0)(0) = 2 Or teamtable.Rows(0)(0) = 9 Then
+                    Overwatch.Show()
+                End If
+            End If
+
             'Overwatch.Show() 'remove this comment line to enable the palantir
 
 
@@ -168,7 +179,12 @@ Public Class Dashboard
     End Sub
 
     Private Sub ViewButton_Click(sender As Object, e As EventArgs) Handles ViewButton.Click
-        Whiteboard.Show()
+        If IDLabel.Text = "1" Then
+            Manager.Show()
+        Else
+            Whiteboard.Show()
+        End If
+
     End Sub
 
     Private Sub FlatButton1_Click(sender As Object, e As EventArgs)

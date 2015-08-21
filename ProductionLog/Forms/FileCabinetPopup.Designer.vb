@@ -28,6 +28,8 @@ Partial Class FileCabinetPopup
         Me.EmpIDLabel = New System.Windows.Forms.Label()
         Me.JobCheckListBox = New System.Windows.Forms.CheckedListBox()
         Me.XButton = New ProductionLog.FlatButton()
+        Me.StartButton = New ProductionLog.FlatButton()
+        Me.OtherButton = New ProductionLog.FlatButton()
         Me.FormSkin1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -36,6 +38,8 @@ Partial Class FileCabinetPopup
         Me.FormSkin1.BackColor = System.Drawing.Color.White
         Me.FormSkin1.BaseColor = System.Drawing.Color.Gray
         Me.FormSkin1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(53, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(60, Byte), Integer))
+        Me.FormSkin1.Controls.Add(Me.OtherButton)
+        Me.FormSkin1.Controls.Add(Me.StartButton)
         Me.FormSkin1.Controls.Add(Me.Label1)
         Me.FormSkin1.Controls.Add(Me.EmpIDLabel)
         Me.FormSkin1.Controls.Add(Me.JobCheckListBox)
@@ -56,7 +60,7 @@ Partial Class FileCabinetPopup
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(73, 204)
+        Me.Label1.Location = New System.Drawing.Point(71, 156)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(374, 21)
         Me.Label1.TabIndex = 5
@@ -79,7 +83,7 @@ Partial Class FileCabinetPopup
         Me.JobCheckListBox.FormattingEnabled = True
         Me.JobCheckListBox.Location = New System.Drawing.Point(3, 53)
         Me.JobCheckListBox.Name = "JobCheckListBox"
-        Me.JobCheckListBox.Size = New System.Drawing.Size(513, 148)
+        Me.JobCheckListBox.Size = New System.Drawing.Size(513, 100)
         Me.JobCheckListBox.TabIndex = 3
         '
         'XButton
@@ -95,6 +99,34 @@ Partial Class FileCabinetPopup
         Me.XButton.TabIndex = 2
         Me.XButton.Text = "X"
         Me.XButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        '
+        'StartButton
+        '
+        Me.StartButton.BackColor = System.Drawing.Color.Transparent
+        Me.StartButton.BaseColor = System.Drawing.Color.SteelBlue
+        Me.StartButton.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.StartButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.StartButton.Location = New System.Drawing.Point(134, 200)
+        Me.StartButton.Name = "StartButton"
+        Me.StartButton.Rounded = False
+        Me.StartButton.Size = New System.Drawing.Size(106, 32)
+        Me.StartButton.TabIndex = 6
+        Me.StartButton.Text = "Start Jobs"
+        Me.StartButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        '
+        'OtherButton
+        '
+        Me.OtherButton.BackColor = System.Drawing.Color.Transparent
+        Me.OtherButton.BaseColor = System.Drawing.Color.SteelBlue
+        Me.OtherButton.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.OtherButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.OtherButton.Location = New System.Drawing.Point(271, 200)
+        Me.OtherButton.Name = "OtherButton"
+        Me.OtherButton.Rounded = False
+        Me.OtherButton.Size = New System.Drawing.Size(106, 32)
+        Me.OtherButton.TabIndex = 7
+        Me.OtherButton.Text = "Other"
+        Me.OtherButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
         'FileCabinetPopup
         '
@@ -118,4 +150,6 @@ Partial Class FileCabinetPopup
     Friend WithEvents EmpIDLabel As System.Windows.Forms.Label
     Friend WithEvents JobCheckListBox As System.Windows.Forms.CheckedListBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents OtherButton As ProductionLog.FlatButton
+    Friend WithEvents StartButton As ProductionLog.FlatButton
 End Class

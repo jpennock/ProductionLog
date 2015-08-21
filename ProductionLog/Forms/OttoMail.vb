@@ -91,12 +91,12 @@ Public Class OttoMail
                                 thefolder = "P:\Treasury Management\Funding\" & NowDate & "\" & Message.Headers.From.Address.ToString & " " & Message.Headers.Subject & "\"
                                 Dim filetype = msgpart.ContentType
                                 Dim contentid = msgpart.ContentId
-                                'System.IO.Directory.CreateDirectory(thefolder)
+                                System.IO.Directory.CreateDirectory(thefolder)
                                 'Using sw As StreamWriter = File.CreateText(thebodypath)
                                 '    sw.WriteLine(DerString)
                                 'End Using
-                                'System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
-                                'Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
+                                System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
+                                Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
                             Catch ex As Exception
                                 MsgBox(ex.ToString)
                             End Try
@@ -121,7 +121,24 @@ Public Class OttoMail
                         End Try
                     Next
                 End If
-                Client.DeleteMessage(I) 'This should make it where we don't see the EMAIL again.
+
+                If Message.Headers.From.Address.ToString.ToLower = "jpennock@primalend.com" Or Message.Headers.From.Address.ToString.ToLower = "jmpennock@primalend.com" Then
+                    For Each msgpart As MessagePart In Message.FindAllAttachments
+                        Try
+                            Dim NowTime As String = DateTime.Now.ToString("HH mm ss")
+                            Dim thefile = NowTime & msgpart.FileName
+                            Dim filetype = msgpart.ContentType
+                            Dim contentid = msgpart.ContentId
+                            System.IO.File.WriteAllBytes("P:\SCANS\Otto" & "\" & thefile, msgpart.Body)
+                            Otto.LogTextBox.AppendText(vbNewLine & "Found an attachment from " & Message.Headers.From.Address.ToString & " @ " & TimeOfDay)
+                            'MsgBox("success: " & thefile & " " & filetype.ToString)
+                        Catch ex As Exception
+                            MsgBox(ex.ToString)
+                        End Try
+                    Next
+                End If
+
+                Client.DeleteMessage(I) 'This should make it where we don't see the EMAIL again. Comment in and out to test multiples of the same email.
                 I = I - 1
             Loop
             Client.Disconnect() 'These two have to be called in order for the delete functions to commit

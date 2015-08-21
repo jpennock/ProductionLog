@@ -31,6 +31,25 @@ Public Class FileCabinetPopup
     End Function
     Private Sub FileCabinetPopup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MakeTopMost()
+        Try
+            Dim JobTable As New DataTable
+            Dim JobQuery As String = "SELECT JobID,BatchID,DateAssigned,Dealer,Job,Quantity From workflow where dealer='" & Overwatch.BBComboBox.Items(Overwatch.BBComboBox.SelectedIndex).ToString & "' and job like '%CIFR%' and datecompleted is null"
+            Dim JobAdapt As New MySqlDataAdapter(JobQuery, SqlConnectionString)
+            JobAdapt.Fill(JobTable)
+            If JobTable.Rows.Count > 1 Then 'If there is more than one CIFR job available.
+                For i = 0 To JobTable.Rows.Count - 1
+                    JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString)
+                Next
+                For c = JobCheckListBox.Items.Count - 1 To 0 Step -1
+                    JobCheckListBox.SetItemChecked(c, True)
+                Next
+            ElseIf JobTable.Rows.Count = 1 Then 'If there is only the one CIFR job available, assign that one.
+                'MsgBox("Just one")
+            End If
+            StartButton.Focus()
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 
     Private Sub XButton_Click(sender As Object, e As EventArgs) Handles XButton.Click
