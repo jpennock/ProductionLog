@@ -24,12 +24,12 @@ Partial Class FileCabinetPopup
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FileCabinetPopup))
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.OtherButton = New ProductionLog.FlatButton()
+        Me.StartButton = New ProductionLog.FlatButton()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.EmpIDLabel = New System.Windows.Forms.Label()
         Me.JobCheckListBox = New System.Windows.Forms.CheckedListBox()
         Me.XButton = New ProductionLog.FlatButton()
-        Me.StartButton = New ProductionLog.FlatButton()
-        Me.OtherButton = New ProductionLog.FlatButton()
         Me.FormSkin1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -51,20 +51,48 @@ Partial Class FileCabinetPopup
         Me.FormSkin1.HeaderMaximize = False
         Me.FormSkin1.Location = New System.Drawing.Point(0, 0)
         Me.FormSkin1.Name = "FormSkin1"
-        Me.FormSkin1.Size = New System.Drawing.Size(519, 244)
+        Me.FormSkin1.Size = New System.Drawing.Size(519, 226)
         Me.FormSkin1.TabIndex = 0
         Me.FormSkin1.Text = "Available Jobs:"
+        '
+        'OtherButton
+        '
+        Me.OtherButton.BackColor = System.Drawing.Color.Transparent
+        Me.OtherButton.BaseColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.OtherButton.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.OtherButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.OtherButton.Location = New System.Drawing.Point(259, 188)
+        Me.OtherButton.Name = "OtherButton"
+        Me.OtherButton.Rounded = False
+        Me.OtherButton.Size = New System.Drawing.Size(123, 32)
+        Me.OtherButton.TabIndex = 7
+        Me.OtherButton.Text = "Request Update"
+        Me.OtherButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        '
+        'StartButton
+        '
+        Me.StartButton.BackColor = System.Drawing.Color.Transparent
+        Me.StartButton.BaseColor = System.Drawing.Color.SteelBlue
+        Me.StartButton.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.StartButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.StartButton.Location = New System.Drawing.Point(132, 188)
+        Me.StartButton.Name = "StartButton"
+        Me.StartButton.Rounded = False
+        Me.StartButton.Size = New System.Drawing.Size(106, 32)
+        Me.StartButton.TabIndex = 6
+        Me.StartButton.Text = "Start Jobs"
+        Me.StartButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(71, 156)
+        Me.Label1.Location = New System.Drawing.Point(128, 152)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(374, 21)
+        Me.Label1.Size = New System.Drawing.Size(254, 21)
         Me.Label1.TabIndex = 5
-        Me.Label1.Text = "More than one job! Which ones are you working on?"
+        Me.Label1.Text = "Select the Jobs you are working on."
         '
         'EmpIDLabel
         '
@@ -100,39 +128,11 @@ Partial Class FileCabinetPopup
         Me.XButton.Text = "X"
         Me.XButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
-        'StartButton
-        '
-        Me.StartButton.BackColor = System.Drawing.Color.Transparent
-        Me.StartButton.BaseColor = System.Drawing.Color.SteelBlue
-        Me.StartButton.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.StartButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.StartButton.Location = New System.Drawing.Point(134, 200)
-        Me.StartButton.Name = "StartButton"
-        Me.StartButton.Rounded = False
-        Me.StartButton.Size = New System.Drawing.Size(106, 32)
-        Me.StartButton.TabIndex = 6
-        Me.StartButton.Text = "Start Jobs"
-        Me.StartButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
-        '
-        'OtherButton
-        '
-        Me.OtherButton.BackColor = System.Drawing.Color.Transparent
-        Me.OtherButton.BaseColor = System.Drawing.Color.SteelBlue
-        Me.OtherButton.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.OtherButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.OtherButton.Location = New System.Drawing.Point(271, 200)
-        Me.OtherButton.Name = "OtherButton"
-        Me.OtherButton.Rounded = False
-        Me.OtherButton.Size = New System.Drawing.Size(106, 32)
-        Me.OtherButton.TabIndex = 7
-        Me.OtherButton.Text = "Other"
-        Me.OtherButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
-        '
         'FileCabinetPopup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(519, 244)
+        Me.ClientSize = New System.Drawing.Size(519, 226)
         Me.Controls.Add(Me.FormSkin1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

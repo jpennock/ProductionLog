@@ -215,6 +215,7 @@ Public Class Overwatch
                     For i = CheckTable.Rows.Count - 1 To 0 Step -1 'use this one to remove any checktable item that is marked f still, proving that you aren't currently open in any of those windows
                         If CheckTable.Rows(i)(1) = "f" Then
                             ' MsgBox("remove")
+                            JobEnd(CheckTable.Rows(i)(0).ToString) 'This only works of there are more than one BBs open. I'll see what else I can do 8/21/15
                             RemoveComboItem(BBComboBox, i)
                         End If
                     Next
@@ -257,6 +258,7 @@ SLEEPYTIME:
                 Dim dlg As New RemoveComboItemDelegate(AddressOf RemoveComboItem)
                 Me.Invoke(dlg, ComboObject, Index)
             Else
+                JobEnd(ComboObject.Items(Index).ToString)
                 ComboObject.Items.RemoveAt(Index)
             End If
         End If
@@ -306,9 +308,7 @@ SLEEPYTIME:
     End Sub
 
     Public Function ShowJobs() 'I can get things to interact and change the actual overwatch form, but I can't get other forms to pop up or do what I need. :( 8/18/15 Fixed 8/19/15
-
         FileCabinetPopup.Show()
-
         'Try
         '    Dim JobTable As New DataTable
         '    Dim JobQuery As String = "SELECT JobID,BatchID,DateAssigned,Dealer,Job,Quantity From workflow where dealer='" & BBComboBox.Items(BBComboBox.SelectedIndex).ToString & "' and job like '%CIFR%' and datecompleted is null"
@@ -339,7 +339,10 @@ SLEEPYTIME:
         'End Try
         Return Nothing
     End Function
-
+    Public Function JobEnd(ByVal Dealer As String) 'This now only works with ONE dealership. I'll refine it as time goes on. 8/21/15.
+        MsgBox("Test : " & Dealer)
+        Return Nothing
+    End Function
     Private Sub FlatClose1_Click(sender As Object, e As EventArgs)
 
     End Sub
