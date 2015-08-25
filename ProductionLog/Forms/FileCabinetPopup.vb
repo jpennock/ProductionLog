@@ -6,6 +6,8 @@ Imports System.Data.OleDb
 Imports System.Runtime.InteropServices
 Imports MySql.Data.MySqlClient
 Imports System.Threading
+Imports System.Net.Mail
+
 Public Class FileCabinetPopup
 
     Dim SqlConnectionString As String = "Server=192.168.1.34; Database=TimeLogDB; User id=clerk; Password=12345;" 'NUC Database <--Being used now
@@ -39,17 +41,11 @@ Public Class FileCabinetPopup
             JobAdapt.Fill(JobTable)
             If JobTable.Rows.Count > 1 Then 'If there is more than one CIFR job available.
                 For i = 0 To JobTable.Rows.Count - 1
-                    JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString & "-" & JobTable.Rows(i)(5).ToString)
+                    JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString & "-" & JobTable.Rows(i)(5).ToString, True)
                 Next
-                For c = JobCheckListBox.Items.Count - 1 To 0 Step -1
-                    JobCheckListBox.SetItemChecked(c, True)
-                Next
-            ElseIf JobTable.Rows.Count = 1 Then 'If there is only the one CIFR job available, assign that one.
+            ElseIf JobTable.Rows.Count < 2 Then 'Only one job? throw it in there too.
                 For i = 0 To JobTable.Rows.Count - 1
-                    JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString & "-" & JobTable.Rows(i)(5).ToString)
-                Next
-                For c = JobCheckListBox.Items.Count - 1 To 0 Step -1
-                    JobCheckListBox.SetItemChecked(c, True)
+                    JobCheckListBox.Items.Add(JobTable.Rows(i)(0).ToString & "-" & JobTable.Rows(i)(1).ToString & "-" & JobTable.Rows(i)(3) & "-" & JobTable.Rows(i)(4).ToString & "-" & JobTable.Rows(i)(5).ToString, True)
                 Next
             Else
                 Me.Dispose()
@@ -85,9 +81,13 @@ Public Class FileCabinetPopup
                         End If
                     End If
                 Next
-                MsgBox(QueryBuilt.ToString)
-
-
+                'MsgBox(QueryBuilt.ToString)
+                Using connector As New MySqlConnection(SqlConnectionString)
+                    Dim updatecommand As New MySqlCommand(QueryBuilt.ToString, connector)
+                    connector.Open()
+                    updatecommand.ExecuteNonQuery()
+                    connector.Close()
+                End Using
             Catch ex As Exception
                 MsgBox(ex.ToString)
             End Try
@@ -97,14 +97,32 @@ Public Class FileCabinetPopup
     End Sub
 
     Private Sub OtherButton_Click(sender As Object, e As EventArgs) Handles OtherButton.Click
-        Try
-            If MsgBox("Have you verified all files are not found in the CIFR?", vbYesNo, "Please verify") = MsgBoxResult.Yes Then
-            Else
-                MsgBox("Please check through all files before asking for an update", vbOKOnly, "Thanks")
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
+        ShowQuery.Show()
     End Sub
+
+    Public Function MailIt(ByVal Body As String, ByVal emailto As String, ByVal IsHTML As Boolean)
+        Try 'Try to send an email with the command results..
+
+            Dim smtp_server As New SmtpClient
+            Dim e_mail As New MailMessage()
+            smtp_server.UseDefaultCredentials = False
+            smtp_server.Credentials = New Net.NetworkCredential("ottoprimalend@gmail.com", "ottoprimalend1")
+            smtp_server.Port = 587
+            smtp_server.EnableSsl = True
+            smtp_server.Host = "smtp.gmail.com"
+
+            e_mail = New MailMessage
+            e_mail.From = New MailAddress("ottoprimalend@gmail.com")
+            e_mail.To.Add(emailto)
+            e_mail.Subject = "Update Request"
+            e_mail.IsBodyHtml = IsHTML
+            e_mail.Body = Body
+            smtp_server.Send(e_mail)
+            'Otto.LogTextBox.AppendText(vbNewLine & "Sent an email to " & emailto & " @ " & TimeOfDay)
+        Catch ex As Exception
+            'Otto.LogTextBox.AppendText(vbNewLine & "Couldn't send an email to " & emailto & " @ " & TimeOfDay)
+        End Try
+        Return Nothing
+    End Function
+
 End Class

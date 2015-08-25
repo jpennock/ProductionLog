@@ -24,10 +24,10 @@ Partial Class MainParent
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainParent))
         Me.FormSkin1 = New ProductionLog.FormSkin()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.FileButton = New ProductionLog.FlatButton()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.FormSkin1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -52,30 +52,6 @@ Partial Class MainParent
         Me.FormSkin1.TabIndex = 1
         Me.FormSkin1.Text = "VIN Uploader"
         '
-        'DataGridView1
-        '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(3, 53)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(696, 603)
-        Me.DataGridView1.TabIndex = 0
-        '
-        'CheckedListBox1
-        '
-        Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(731, 166)
-        Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(204, 100)
-        Me.CheckedListBox1.TabIndex = 1
-        '
-        'ComboBox1
-        '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(731, 53)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(204, 29)
-        Me.ComboBox1.TabIndex = 2
-        '
         'FileButton
         '
         Me.FileButton.BackColor = System.Drawing.Color.Transparent
@@ -89,6 +65,30 @@ Partial Class MainParent
         Me.FileButton.TabIndex = 3
         Me.FileButton.Text = "Select File"
         Me.FileButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(731, 53)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(204, 29)
+        Me.ComboBox1.TabIndex = 2
+        '
+        'CheckedListBox1
+        '
+        Me.CheckedListBox1.FormattingEnabled = True
+        Me.CheckedListBox1.Location = New System.Drawing.Point(731, 166)
+        Me.CheckedListBox1.Name = "CheckedListBox1"
+        Me.CheckedListBox1.Size = New System.Drawing.Size(204, 100)
+        Me.CheckedListBox1.TabIndex = 1
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Location = New System.Drawing.Point(3, 53)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(696, 603)
+        Me.DataGridView1.TabIndex = 0
         '
         'MainParent
         '

@@ -25,16 +25,16 @@ Partial Class Overwatch
         Me.components = New System.ComponentModel.Container()
         Me.Palantiri = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.IDTextBox = New System.Windows.Forms.TextBox()
+        Me.MessageBodyTextBox = New System.Windows.Forms.RichTextBox()
+        Me.FlatMini1 = New ProductionLog.FlatMini()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.FlatClose1 = New ProductionLog.FlatClose()
         Me.MinimizeLabel = New System.Windows.Forms.Label()
         Me.ExpandButton = New System.Windows.Forms.Button()
         Me.BBComboBox = New System.Windows.Forms.ComboBox()
         Me.EmpIDLabel = New System.Windows.Forms.Label()
         Me.DealershipLabel = New System.Windows.Forms.Label()
-        Me.MiniButton = New ProductionLog.FlatButton()
-        Me.FlatButton1 = New ProductionLog.FlatButton()
         Me.FormSkin1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -48,16 +48,16 @@ Partial Class Overwatch
         Me.FormSkin1.BackColor = System.Drawing.Color.White
         Me.FormSkin1.BaseColor = System.Drawing.Color.Gray
         Me.FormSkin1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(53, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(60, Byte), Integer))
-        Me.FormSkin1.Controls.Add(Me.FlatButton1)
+        Me.FormSkin1.Controls.Add(Me.IDTextBox)
+        Me.FormSkin1.Controls.Add(Me.MessageBodyTextBox)
+        Me.FormSkin1.Controls.Add(Me.FlatMini1)
         Me.FormSkin1.Controls.Add(Me.Label1)
-        Me.FormSkin1.Controls.Add(Me.CheckedListBox1)
         Me.FormSkin1.Controls.Add(Me.FlatClose1)
         Me.FormSkin1.Controls.Add(Me.MinimizeLabel)
         Me.FormSkin1.Controls.Add(Me.ExpandButton)
         Me.FormSkin1.Controls.Add(Me.BBComboBox)
         Me.FormSkin1.Controls.Add(Me.EmpIDLabel)
         Me.FormSkin1.Controls.Add(Me.DealershipLabel)
-        Me.FormSkin1.Controls.Add(Me.MiniButton)
         Me.FormSkin1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FormSkin1.FlatColor = System.Drawing.Color.SteelBlue
         Me.FormSkin1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
@@ -68,27 +68,52 @@ Partial Class Overwatch
         Me.FormSkin1.Size = New System.Drawing.Size(289, 60)
         Me.FormSkin1.TabIndex = 0
         '
+        'IDTextBox
+        '
+        Me.IDTextBox.BackColor = System.Drawing.Color.Gray
+        Me.IDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.IDTextBox.ForeColor = System.Drawing.Color.White
+        Me.IDTextBox.Location = New System.Drawing.Point(120, 63)
+        Me.IDTextBox.Name = "IDTextBox"
+        Me.IDTextBox.ReadOnly = True
+        Me.IDTextBox.Size = New System.Drawing.Size(100, 22)
+        Me.IDTextBox.TabIndex = 14
+        '
+        'MessageBodyTextBox
+        '
+        Me.MessageBodyTextBox.BackColor = System.Drawing.Color.Gray
+        Me.MessageBodyTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.MessageBodyTextBox.ForeColor = System.Drawing.Color.White
+        Me.MessageBodyTextBox.Location = New System.Drawing.Point(29, 99)
+        Me.MessageBodyTextBox.Name = "MessageBodyTextBox"
+        Me.MessageBodyTextBox.ReadOnly = True
+        Me.MessageBodyTextBox.Size = New System.Drawing.Size(235, 118)
+        Me.MessageBodyTextBox.TabIndex = 13
+        Me.MessageBodyTextBox.Text = ""
+        '
+        'FlatMini1
+        '
+        Me.FlatMini1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.FlatMini1.BackColor = System.Drawing.Color.White
+        Me.FlatMini1.BaseColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(49, Byte), Integer))
+        Me.FlatMini1.Font = New System.Drawing.Font("Marlett", 12.0!)
+        Me.FlatMini1.Location = New System.Drawing.Point(246, 0)
+        Me.FlatMini1.Name = "FlatMini1"
+        Me.FlatMini1.Size = New System.Drawing.Size(18, 18)
+        Me.FlatMini1.TabIndex = 11
+        Me.FlatMini1.Text = "FlatMini1"
+        Me.FlatMini1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(98, 62)
+        Me.Label1.Location = New System.Drawing.Point(40, 62)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(77, 21)
+        Me.Label1.Size = New System.Drawing.Size(74, 21)
         Me.Label1.TabIndex = 9
-        Me.Label1.Text = "CIFR Jobs"
-        Me.Label1.Visible = False
-        '
-        'CheckedListBox1
-        '
-        Me.CheckedListBox1.BackColor = System.Drawing.Color.Gray
-        Me.CheckedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(1, 86)
-        Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(286, 146)
-        Me.CheckedListBox1.TabIndex = 8
+        Me.Label1.Text = "Message:"
         '
         'FlatClose1
         '
@@ -108,11 +133,11 @@ Partial Class Overwatch
         Me.MinimizeLabel.AutoSize = True
         Me.MinimizeLabel.BackColor = System.Drawing.Color.Transparent
         Me.MinimizeLabel.ForeColor = System.Drawing.Color.Black
-        Me.MinimizeLabel.Location = New System.Drawing.Point(58, 566)
+        Me.MinimizeLabel.Location = New System.Drawing.Point(40, 220)
         Me.MinimizeLabel.Name = "MinimizeLabel"
-        Me.MinimizeLabel.Size = New System.Drawing.Size(164, 21)
+        Me.MinimizeLabel.Size = New System.Drawing.Size(203, 21)
         Me.MinimizeLabel.TabIndex = 6
-        Me.MinimizeLabel.Text = "Click here to minimize"
+        Me.MinimizeLabel.Text = "Click here to close message."
         Me.MinimizeLabel.Visible = False
         '
         'ExpandButton
@@ -159,34 +184,6 @@ Partial Class Overwatch
         Me.DealershipLabel.Size = New System.Drawing.Size(0, 21)
         Me.DealershipLabel.TabIndex = 2
         '
-        'MiniButton
-        '
-        Me.MiniButton.BackColor = System.Drawing.Color.Transparent
-        Me.MiniButton.BaseColor = System.Drawing.Color.Teal
-        Me.MiniButton.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.MiniButton.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.MiniButton.Location = New System.Drawing.Point(242, 0)
-        Me.MiniButton.Name = "MiniButton"
-        Me.MiniButton.Rounded = False
-        Me.MiniButton.Size = New System.Drawing.Size(23, 18)
-        Me.MiniButton.TabIndex = 1
-        Me.MiniButton.Text = "_"
-        Me.MiniButton.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
-        '
-        'FlatButton1
-        '
-        Me.FlatButton1.BackColor = System.Drawing.Color.Transparent
-        Me.FlatButton1.BaseColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.FlatButton1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.FlatButton1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.FlatButton1.Location = New System.Drawing.Point(83, 238)
-        Me.FlatButton1.Name = "FlatButton1"
-        Me.FlatButton1.Rounded = False
-        Me.FlatButton1.Size = New System.Drawing.Size(104, 32)
-        Me.FlatButton1.TabIndex = 10
-        Me.FlatButton1.Text = "End Selected"
-        Me.FlatButton1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
-        '
         'Overwatch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -204,7 +201,6 @@ Partial Class Overwatch
 
     End Sub
     Friend WithEvents FormSkin1 As ProductionLog.FormSkin
-    Friend WithEvents MiniButton As ProductionLog.FlatButton
     Friend WithEvents Palantiri As System.Windows.Forms.Timer
     Friend WithEvents DealershipLabel As System.Windows.Forms.Label
     Friend WithEvents EmpIDLabel As System.Windows.Forms.Label
@@ -213,6 +209,7 @@ Partial Class Overwatch
     Friend WithEvents MinimizeLabel As System.Windows.Forms.Label
     Friend WithEvents FlatClose1 As ProductionLog.FlatClose
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents CheckedListBox1 As System.Windows.Forms.CheckedListBox
-    Friend WithEvents FlatButton1 As ProductionLog.FlatButton
+    Friend WithEvents FlatMini1 As ProductionLog.FlatMini
+    Friend WithEvents MessageBodyTextBox As System.Windows.Forms.RichTextBox
+    Friend WithEvents IDTextBox As System.Windows.Forms.TextBox
 End Class

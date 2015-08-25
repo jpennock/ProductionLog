@@ -87,6 +87,7 @@ Public Class Overwatch
     Public Delegate Sub SetLabelTextDelegate(ByVal LabelObject As Label, ByVal Value As String)
     Public Delegate Sub AddComboItemDelegate(ByVal ComboObject As ComboBox, ByVal Value As String)
     Public Delegate Sub RemoveComboItemDelegate(ByVal ComboObject As ComboBox, ByVal Index As Integer)
+    Public Delegate Sub CheckMessagesDelegate(ByVal IDBox As TextBox, ID As String)
 
     Private hShellWindow As IntPtr = GetShellWindow()
     Private dictWindows As New Dictionary(Of IntPtr, String)
@@ -142,7 +143,7 @@ Public Class Overwatch
         Palintir_Thread.Start()
     End Sub
     Private Sub Palantiri_Tick(sender As Object, e As EventArgs) Handles Palantiri.Tick
-        If Me.Size.Height = 600 And TimerInt < 3 Then
+        If Me.Size.Height > 60 And TimerInt < 3 Then
             MinimizeLabel.Visible = True
             TimerInt += 1
         Else
@@ -231,6 +232,15 @@ Public Class Overwatch
                 RemoveComboItem(BBComboBox, 0) 'the index here will have to be dynamic in order to properly remove the item.
                 InExcel = False
             End If
+            If Me.Size.Height <= 60 Then
+                Dim MessageQ As String = "Select * from messages where empid=" & EmpIDLabel.Text & " and isread=0"
+                Dim MessageT As New DataTable
+                Dim MessageA As New MySqlDataAdapter(MessageQ, SqlConnectionString)
+                MessageA.Fill(MessageT)
+                If MessageT.Rows.Count > 0 Then
+                    CheckMessages(IDTextBox, MessageT.Rows(0)(0).ToString)
+                End If
+            End If
 SLEEPYTIME:
             'Counter += 1
             Thread.Sleep(500)
@@ -272,28 +282,24 @@ SLEEPYTIME:
             LabelObject.Text = Value
         End If
     End Sub
-    Private Sub MiniButton_Click(sender As Object, e As EventArgs) Handles MiniButton.Click
-        Try
-            If IsTopMost = True Then
-                MakeNormal()
-            Else
-                MakeTopMost()
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
+    Private Sub MiniButton_Click(sender As Object, e As EventArgs)
+        
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ExpandButton.Click
         Try
-            If Me.Size.Height = 60 Then
-                Me.Size = New Size(Me.Size.Width, 600)
-                'ExpandButton.Location = New Point(103, 590)
-            Else
-                Me.Size = New Size(Me.Size.Width, 60)
-                'ExpandButton.Location = New Point(103, 50)
+            If IDTextBox.Text = "" Then
+                Exit Sub
             End If
+            Using connector As New MySqlConnection(SqlConnectionString)
+                Dim UpdateQ As String = "update messages set isread=1 where uniqueid=" & IDTextBox.Text
+                Dim UpdateCommand As New MySqlCommand(UpdateQ, connector)
+                connector.Open()
+                UpdateCommand.ExecuteNonQuery()
+                connector.Close()
+            End Using
+            Me.Size = New Size(Me.Size.Width, 60)
+            'ExpandButton.Location = New Point(103, 50)
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
@@ -340,7 +346,7 @@ SLEEPYTIME:
         Return Nothing
     End Function
     Public Function JobEnd(ByVal Dealer As String) 'This now only works with ONE dealership. I'll refine it as time goes on. 8/21/15.
-        MsgBox("Test : " & Dealer)
+        'MsgBox("Test : " & Dealer)
         Return Nothing
     End Function
     Private Sub FlatClose1_Click(sender As Object, e As EventArgs)
@@ -353,5 +359,28 @@ SLEEPYTIME:
 
     Private Sub FlatButton1_Click(sender As Object, e As EventArgs)
         Me.Dispose()
+    End Sub
+
+    Public Function CheckMessages(ByVal IDBox As TextBox, ByVal ID As String)
+        If IDBox.InvokeRequired Then
+            Dim dlg As New CheckMessagesDelegate(AddressOf CheckMessages)
+            Me.Invoke(dlg, IDBox, ID)
+        Else
+            IDBox.Text = ID
+        End If
+        Return Nothing
+    End Function
+
+    Private Sub IDTextBox_TextChanged(sender As Object, e As EventArgs) Handles IDTextBox.TextChanged
+        Try
+            Dim BodyQ As String = "Select MessageBody from messages where uniqueid=" & IDTextBox.Text
+            Dim BodyA As New MySqlDataAdapter(BodyQ, SqlConnectionString)
+            Dim BodyT As New DataTable
+            BodyA.Fill(BodyT)
+            MessageBodyTextBox.Text = BodyT.Rows(0)(0).ToString
+            Me.Size = New Size(Me.Size.Width, 250)
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 End Class

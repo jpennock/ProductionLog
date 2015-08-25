@@ -55,7 +55,7 @@ Public Class Dashboard
             teamadapt.Fill(teamtable)
 
             If teamtable.Rows.Count > 0 Then
-                If teamtable.Rows(0)(0) = 2 Or teamtable.Rows(0)(0) = 9 Then
+                If teamtable.Rows(0)(0) = 1 Or teamtable.Rows(0)(0) = 9 Then
                     Overwatch.Show()
                 End If
             End If
