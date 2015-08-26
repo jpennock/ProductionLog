@@ -23,6 +23,7 @@ Partial Class Overwatch
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Overwatch))
         Me.Palantiri = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
         Me.IDTextBox = New System.Windows.Forms.TextBox()
@@ -168,7 +169,7 @@ Partial Class Overwatch
         Me.EmpIDLabel.AutoSize = True
         Me.EmpIDLabel.BackColor = System.Drawing.Color.Transparent
         Me.EmpIDLabel.ForeColor = System.Drawing.Color.White
-        Me.EmpIDLabel.Location = New System.Drawing.Point(269, 23)
+        Me.EmpIDLabel.Location = New System.Drawing.Point(258, 23)
         Me.EmpIDLabel.Name = "EmpIDLabel"
         Me.EmpIDLabel.Size = New System.Drawing.Size(19, 21)
         Me.EmpIDLabel.TabIndex = 3
@@ -191,6 +192,7 @@ Partial Class Overwatch
         Me.ClientSize = New System.Drawing.Size(289, 60)
         Me.Controls.Add(Me.FormSkin1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Overwatch"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Overwatch"

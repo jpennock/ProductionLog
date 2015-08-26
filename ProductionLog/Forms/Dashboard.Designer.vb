@@ -80,7 +80,7 @@ Partial Class Dashboard
         Me.VersionLabel.Name = "VersionLabel"
         Me.VersionLabel.Size = New System.Drawing.Size(31, 13)
         Me.VersionLabel.TabIndex = 9
-        Me.VersionLabel.Text = "0.6.2"
+        Me.VersionLabel.Text = "0.6.3"
         '
         'FlatButton1
         '
@@ -95,6 +95,7 @@ Partial Class Dashboard
         Me.FlatButton1.TabIndex = 8
         Me.FlatButton1.Text = "TEST"
         Me.FlatButton1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.FlatButton1.Visible = False
         '
         'ViewButton
         '

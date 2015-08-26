@@ -43,38 +43,43 @@ Public Class Dashboard
     End Sub
 
     Private Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'MainParent.Show()
         Try 'Test the mysql connection, to see if I need to convert completely this weekend :) (8/18/15 Don't remember why I wrote this first part, but I like keeping it here.)
             Using Connection As New MySqlConnection(SqlConnectionString)
                 Connection.Open()
                 Connection.Close()
             End Using
-
+            '*** THIS FILLS A DATATABLE TO SHOW WHAT TEAM THE USER IS ON
             Dim teamquery As String = "Select iswolfpack from employee where empid=" & IDLabel.Text
             Dim teamadapt As New MySqlDataAdapter(teamquery, SqlConnectionString)
             Dim teamtable As New DataTable
             teamadapt.Fill(teamtable)
 
+
+            '** USE THIS AREA TO ENABLE SPECIFIC ITEMS FOR TEAMS TO TEST
+            '** BETA TEST AREA:
             If teamtable.Rows.Count > 0 Then
-                If teamtable.Rows(0)(0) = 1 Or teamtable.Rows(0)(0) = 9 Then
+                If teamtable.Rows(0)(0) = 9 Then
                     Overwatch.Show()
+                    OttoButton.Visible = True
+                    FlatButton1.Visible = True
+                ElseIf teamtable.Rows(0)(0) = 1 Then
+                    FlatButton1.Visible = True
+                Else
+                    OttoButton.Visible = False
+                    FlatButton1.Visible = False
                 End If
             End If
 
-            'Overwatch.Show() 'remove this comment line to enable the palantir
 
 
-            'Dim Table As New DataTable
-            'Dim Query As String = "SELECT BugMessage from BugTracker where BugID='1'"
-            'Dim Adapt As New MySqlDataAdapter(Query, SqlConnectionString)
-            'Adapt.Fill(Table)
-            'If Table.Rows.Count > 0 Then
 
-            'End If
-
+            'FOR TESTING
+            '*******************************************
 
         Catch ex As Exception
             SendError.Show()
-            SendError.EmpIDLabel.Text = "14"
+            SendError.EmpIDLabel.Text = IDLabel.Text
             SendError.ErrorRTB.Text = ex.ToString
         End Try
 

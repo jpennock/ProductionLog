@@ -27,9 +27,10 @@ Partial Class MainParent
         Me.FileButton = New ProductionLog.FlatButton()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.UploadDGV = New System.Windows.Forms.DataGridView()
+        Me.OpenF = New System.Windows.Forms.OpenFileDialog()
         Me.FormSkin1.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.UploadDGV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'FormSkin1
@@ -40,7 +41,7 @@ Partial Class MainParent
         Me.FormSkin1.Controls.Add(Me.FileButton)
         Me.FormSkin1.Controls.Add(Me.ComboBox1)
         Me.FormSkin1.Controls.Add(Me.CheckedListBox1)
-        Me.FormSkin1.Controls.Add(Me.DataGridView1)
+        Me.FormSkin1.Controls.Add(Me.UploadDGV)
         Me.FormSkin1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FormSkin1.FlatColor = System.Drawing.Color.SteelBlue
         Me.FormSkin1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
@@ -82,13 +83,17 @@ Partial Class MainParent
         Me.CheckedListBox1.Size = New System.Drawing.Size(204, 100)
         Me.CheckedListBox1.TabIndex = 1
         '
-        'DataGridView1
+        'UploadDGV
         '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(3, 53)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(696, 603)
-        Me.DataGridView1.TabIndex = 0
+        Me.UploadDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.UploadDGV.Location = New System.Drawing.Point(3, 53)
+        Me.UploadDGV.Name = "UploadDGV"
+        Me.UploadDGV.Size = New System.Drawing.Size(696, 603)
+        Me.UploadDGV.TabIndex = 0
+        '
+        'OpenF
+        '
+        Me.OpenF.FileName = "OpenFileDialog1"
         '
         'MainParent
         '
@@ -104,14 +109,15 @@ Partial Class MainParent
         Me.Text = "Primalend Production Log"
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.FormSkin1.ResumeLayout(False)
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.UploadDGV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents FormSkin1 As ProductionLog.FormSkin
-    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents UploadDGV As System.Windows.Forms.DataGridView
     Friend WithEvents FileButton As ProductionLog.FlatButton
     Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
     Friend WithEvents CheckedListBox1 As System.Windows.Forms.CheckedListBox
+    Friend WithEvents OpenF As System.Windows.Forms.OpenFileDialog
 
 End Class

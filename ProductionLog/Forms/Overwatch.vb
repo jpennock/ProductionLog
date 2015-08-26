@@ -159,6 +159,16 @@ Public Class Overwatch
         Dim KVPList As New List(Of String)()
         Dim FileList As New List(Of String)()
         While 1
+            Dim ISAM As Boolean = False 'This part checks to see if you are an account manager. If you are, then it won't open the showjob window, since that will get really annoying.
+            Dim AMQuery As String = "select * from accountmanager where empid=" & EmpIDLabel.Text & " and isactive = 1"
+            Dim AMAdapt As New MySqlDataAdapter(AMQuery, SqlConnectionString)
+            Dim AMtable As New DataTable
+            AMAdapt.Fill(AMtable)
+            If AMtable.Rows.Count > 0 Then
+                inJob = True
+            Else
+                inJob = False
+            End If
             'Palantir, the seer stone. Try and watch what excel files are being accessed to make workflow a bit simpler for the clerks/account managers.
             'For every process running
             KVPList.Clear()
@@ -216,7 +226,7 @@ Public Class Overwatch
                     For i = CheckTable.Rows.Count - 1 To 0 Step -1 'use this one to remove any checktable item that is marked f still, proving that you aren't currently open in any of those windows
                         If CheckTable.Rows(i)(1) = "f" Then
                             ' MsgBox("remove")
-                            JobEnd(CheckTable.Rows(i)(0).ToString) 'This only works of there are more than one BBs open. I'll see what else I can do 8/21/15
+                            'JobEnd(CheckTable.Rows(i)(0).ToString) 'This only works of there are more than one BBs open. I'll see what else I can do 8/21/15
                             RemoveComboItem(BBComboBox, i)
                         End If
                     Next
