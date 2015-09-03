@@ -43,7 +43,7 @@ Public Class Dashboard
     End Sub
 
     Private Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'MainParent.Show()
+        'TheCIFR.Show() 'This is the MAIL window
         Try 'Test the mysql connection, to see if I need to convert completely this weekend :) (8/18/15 Don't remember why I wrote this first part, but I like keeping it here.)
             Using Connection As New MySqlConnection(SqlConnectionString)
                 Connection.Open()

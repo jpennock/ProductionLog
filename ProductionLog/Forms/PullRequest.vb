@@ -29,7 +29,6 @@ Public Class PullRequest
             SendError.EmpIDLabel.Text = IDLabel.Text
             SendError.ErrorRTB.Text = ex.ToString
         End Try
-
     End Sub
 
     Private Sub FlatButton1_Click(sender As Object, e As EventArgs) Handles FlatButton1.Click

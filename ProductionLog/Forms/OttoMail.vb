@@ -80,6 +80,14 @@ Public Class OttoMail
                     If emailA.ToLower = "funding@primalend.com" Then
                         For Each msgpart As MessagePart In Message.FindAllAttachments
                             Try
+                                Dim DirtyItems() As String = {"/", ":", "\", "|", "<", ">", "?", "*"}
+                                Dim eSubject As String = Message.Headers.Subject.ToString
+                                Dim eSplit() As String = eSubject.Split(DirtyItems, StringSplitOptions.RemoveEmptyEntries)
+                                eSubject = ""
+                                For s = 0 To eSplit.Count - 1
+                                    eSubject += eSplit(s) & " "
+                                Next
+                                'MsgBox(eSubject)
                                 Dim NowTime As String = DateTime.Now.ToString("HHmmss")
                                 Dim NowDate As String = DateTime.Now.ToString("yyyyMMdd")
                                 If TimeOfDay <= "4:30:00 PM" Then
@@ -88,13 +96,30 @@ Public Class OttoMail
                                     NowDate = DateTime.Now.AddDays(1).ToString("yyyyMMdd")
                                 End If
                                 Dim thefile = NowTime & msgpart.FileName
-                                thefolder = "P:\Treasury Management\Funding\" & NowDate & "\" & Message.Headers.From.Address.ToString & " " & Message.Headers.Subject & "\"
+                                thefolder = "P:\Treasury Management\Funding\" & NowDate & "\" & Message.Headers.From.Address.ToString & " " & eSubject & "\"
                                 Dim filetype = msgpart.ContentType
                                 Dim contentid = msgpart.ContentId
                                 System.IO.Directory.CreateDirectory(thefolder)
                                 'Using sw As StreamWriter = File.CreateText(thebodypath)
                                 '    sw.WriteLine(DerString)
                                 'End Using
+                                System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
+                                Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
+                            Catch ex As Exception
+                                MsgBox(ex.ToString)
+                            End Try
+                        Next
+                    End If
+                    If emailA.ToLower = "scheduledreports@primalend.com" Then
+                        For Each msgpart As MessagePart In Message.FindAllAttachments
+                            Try
+                                Dim eSubject As String = Message.Headers.Subject.ToString
+                                Dim esplit() As String = eSubject.Split(New Char() {" "c})
+                                Dim thefile = esplit(0) & "_" & msgpart.FileName
+                                thefolder = "O:\feeds\"
+                                Dim filetype = msgpart.ContentType
+                                Dim contentid = msgpart.ContentId
+                                System.IO.Directory.CreateDirectory(thefolder)
                                 System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
                                 Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
                             Catch ex As Exception
