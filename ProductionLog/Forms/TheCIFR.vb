@@ -116,4 +116,12 @@ DONE:
             End Try
         End If
     End Sub
+
+    Private Sub MailTreeVIew_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles MailTreeVIew.AfterSelect
+
+    End Sub
+
+    Private Sub MailTreeVIew_MouseUp(sender As Object, e As MouseEventArgs) Handles MailTreeVIew.MouseUp
+
+    End Sub
 End Class

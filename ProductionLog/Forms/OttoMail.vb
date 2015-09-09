@@ -11,9 +11,9 @@ Public Class OttoMail
     Dim MailSeconds As Integer = 0
     Dim DTMessage As New DataTable
     Dim SqlConnectionString As String = "Server=192.168.1.34; Database=TimeLogDB; User id=clerk; Password=12345;" 'NUC Database
-    Dim ConnectionSchema As String = "server=192.168.1.34; Database=information_schema; User id=clerk; Password=12345" 'Schema?
-    Dim ReturnCList As New List(Of String)() 'required for checkmail
-    Dim BodyCList As New List(Of String)() 'required for checkmail
+    Dim ConnectionSchema As String = "server=192.168.1.34; Database=information_schema; User id=clerk; Password=12345" 'Schema to grab just the table names and columns (NOT USED)
+    Dim ReturnCList As New List(Of String)() 'required for checkmail returns the command to the emails listed
+    Dim BodyCList As New List(Of String)() 'required for checkmail gives the body of the email for command parsing
 
     Private Sub OttoMail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DTMessage.Columns.Add("MessageNumber")
@@ -38,6 +38,24 @@ Public Class OttoMail
         MailSeconds += 1
     End Sub
     Public Function CheckMail() '2 public variables required for this function, see above
+        'If these are not passed (to check if the network is up) then it will skip the mail check process. Hopefully cutting back on error popups
+        Dim ConnCheck As New MySqlConnection(SqlConnectionString)
+        Dim ConnOpen As Boolean = False
+        ConnCheck.Open()
+        ConnOpen = ConnCheck.State()
+        ConnCheck.Close()
+        If ConnOpen = False Then
+            Otto.LogTextBox.AppendText(vbNewLine & "Couldn't check mail due to lack of connection to the database. @ " & TimeOfDay)
+            Return Nothing
+            Exit Function
+        End If
+        If My.Computer.Network.Ping("192.168.1.10") Then
+        Else
+            Otto.LogTextBox.AppendText(vbNewLine & "Couldn't check mail due to lack of connection to the network (attempted to conact the fileserver). @ " & TimeOfDay)
+            Return Nothing
+            Exit Function
+        End If
+        'If these pass, then go on with the mail checking.
         Try
             ReturnCList.Clear()
             BodyCList.Clear()
@@ -75,6 +93,8 @@ Public Class OttoMail
                 Dim emailA As String = ""
                 Dim thefolder As String = "P:\Treasury Management\Funding\" & "20150806" & "\" & Message.Headers.From.Address.ToString & " " & Message.Headers.Subject & "\"
                 'MsgBox(thefolder)
+                'IF the email is TO a certain address (sent to a certain distribution list) then do the following:
+                'funding@primalend.com receives a lot of attachments, this drops those into a nice organized area on the server.
                 For Each objectItem As OpenPop.Mime.Header.RfcMailAddress In Message.Headers.[To]
                     emailA = objectItem.Address.ToString()
                     If emailA.ToLower = "funding@primalend.com" Then
@@ -110,6 +130,7 @@ Public Class OttoMail
                             End Try
                         Next
                     End If
+                    'Scheduled reports, for the portal.primalend.com site
                     If emailA.ToLower = "scheduledreports@primalend.com" Then
                         For Each msgpart As MessagePart In Message.FindAllAttachments
                             Try
@@ -129,7 +150,10 @@ Public Class OttoMail
                     End If
                 Next
 
+
                 'MsgBox(System.IO.Directory.GetCurrentDirectory.ToString)
+
+                'If the message is FROM a certain address, then do the following:
 
                 If Message.Headers.From.Address.ToString.ToLower = "xerox_scan@ontarioautosales.com" Or Message.Headers.From.Address.ToString.ToLower = "xerox@ontarioautosales.com" Then
                     For Each msgpart As MessagePart In Message.FindAllAttachments
@@ -290,8 +314,8 @@ Public Class OttoMail
             CommandLabel.Text += 1
         Else
             Dim CommandSet As New List(Of String)()
-            For i = 0 To CommandList.Items.Count - 1
-                CommandSet.add(CommandList.Items(i))
+            For I = 0 To CommandList.Items.Count - 1
+                CommandSet.Add(CommandList.Items(I))
             Next
             Dim Commandstrings As String() = CommandSet.ToArray
             Commander(Commandstrings)
@@ -301,10 +325,10 @@ Public Class OttoMail
     Public Function Commander(ByVal CList As String())
         Dim BodyCommandList As String() = BodyCList.ToArray
         Dim ReturnCommandList As String() = ReturnCList.ToArray
-        For i = 0 To CList.Count - 1
-            If CList(i) = "@Query" Or CList(i) = "@query" Then
+        For I = 0 To CList.Count - 1
+            If CList(I) = "@Query" Or CList(I) = "@query" Then
                 Try
-                    Dim Query As String = BodyCommandList(i).ToLower
+                    Dim Query As String = BodyCommandList(I).ToLower
                     Dim QueryCheck As String() = Query.Split(New Char() {" "c})
                     If QueryCheck(0) = "select" Then 'if it's to see items, no command is required.
                         Dim Results As String = ""
@@ -324,8 +348,8 @@ Public Class OttoMail
                             Next
                             Results = Results & "</tr><br>"
                         Next
-                        MailIt(Results, ReturnCommandList(i), True)
-                        Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " tried the following query: " & BodyCommandList(i) & " @ " & TimeOfDay)
+                        MailIt(Results, ReturnCommandList(I), True)
+                        Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " tried the following query: " & BodyCommandList(I) & " @ " & TimeOfDay)
                     Else
                         'Using Connection As New MySqlConnection(SqlConnectionString)
                         '    Dim Command As New MySqlCommand(Query, Connection)
@@ -333,18 +357,18 @@ Public Class OttoMail
                         '    Command.ExecuteNonQuery()
                         '    Connection.Close()
                         Query = Query & " Cannot be completed at this time."
-                        MailIt(Query, ReturnCommandList(i), False)
-                        Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " attempted a naughty query! @ " & TimeOfDay)
+                        MailIt(Query, ReturnCommandList(I), False)
+                        Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " attempted a naughty query! @ " & TimeOfDay)
                         'End Using
                     End If
 
                 Catch ex As Exception
                     Dim Err As String = ex.ToString
-                    MailIt(Err, ReturnCommandList(i), False)
+                    MailIt(Err, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@watch" Then 'this is how you can request reports on the metrics of each employee.
+            ElseIf CList(I) = "@watch" Then 'this is how you can request reports on the metrics of each employee.
                 Try
-                    Dim Body As String = BodyCommandList(i).ToLower
+                    Dim Body As String = BodyCommandList(I).ToLower
                     Dim Split As String() = Body.Split(New Char() {" "c})
                     Otto.LogTextBox.AppendText(vbNewLine & Split(0))
                     Dim EmpID As String = ""
@@ -359,25 +383,25 @@ Public Class OttoMail
                         Otto.LogTextBox.AppendText(vbNewLine & " had trouble finding an employee for a watch request @ " & TimeOfDay)
                         MailIt(ex.ToString, "jpennock@primalend.com", False)
                     End Try
-                    Otto.RefreshWatch(EmpID, ReturnCommandList(i), Split(0).Trim())
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " requested a watch report @ " & TimeOfDay)
+                    Otto.RefreshWatch(EmpID, ReturnCommandList(I), Split(0).Trim())
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " requested a watch report @ " & TimeOfDay)
                 Catch ex As Exception
                     Otto.LogTextBox.AppendText(vbNewLine & "had an issue with my watch refresh request @ " & TimeOfDay)
                     MailIt(ex.ToString, "jpennock@primalend.com", False)
                 End Try
-            ElseIf CList(i) = "#test" Then
+            ElseIf CList(I) = "#test" Then
                 Try
-                    MailIt("<h3>Welcome!</h3>Your PIN has been updated. Please keep it handy, since you will need it to log in to the production log and clock in for your time card!<br><p>Please follow these steps to install the production log</p><br><p><b>First the top of this email may be asking you to download pictures. PLEASE CLICK THAT SO YOU CAN FOLLOW THE STEPS. After, click this <a href=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend Production Log\setup.exe"">link</a> to download the program</b></p><br>You'll see a window pop up like this:<br><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend Production Log\attachmentwindow.png""><p><b>Click the OPEN button</b></p><p>You'll then see a window like this (sometimes this takes a while, so please be patient as it loads)</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\applicationinstallwindow.png""><p><b>Click the INSTALL button</b></p><p>After it installs, you'll see the main window</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\dashboardwindow.png""><p><b>Click on the WORK QUEUE button</b></p><p>This is the main work window. You can Log in, see which jobs are in your queue and use it to clock in and out.</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\workqueuewindow.png""><p><b>Go ahead and click LOGIN</b></p><p>A small window will pop up, where you can enter your PIN code and then press ENTER to complete the login process</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\loginwindow.png""><p>You should now be logged into the program and ready to get to work. Make sure you press the REFRESH NOW button on the queue to see if anything has been added recently</p><h3>Have a great day!</h3>", ReturnCommandList(i), True)
+                    MailIt("<h3>Welcome!</h3>Your PIN has been updated. Please keep it handy, since you will need it to log in to the production log and clock in for your time card!<br><p>Please follow these steps to install the production log</p><br><p><b>First the top of this email may be asking you to download pictures. PLEASE CLICK THAT SO YOU CAN FOLLOW THE STEPS. After, click this <a href=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend Production Log\setup.exe"">link</a> to download the program</b></p><br>You'll see a window pop up like this:<br><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend Production Log\attachmentwindow.png""><p><b>Click the OPEN button</b></p><p>You'll then see a window like this (sometimes this takes a while, so please be patient as it loads)</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\applicationinstallwindow.png""><p><b>Click the INSTALL button</b></p><p>After it installs, you'll see the main window</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\dashboardwindow.png""><p><b>Click on the WORK QUEUE button</b></p><p>This is the main work window. You can Log in, see which jobs are in your queue and use it to clock in and out.</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\workqueuewindow.png""><p><b>Go ahead and click LOGIN</b></p><p>A small window will pop up, where you can enter your PIN code and then press ENTER to complete the login process</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\loginwindow.png""><p>You should now be logged into the program and ready to get to work. Make sure you press the REFRESH NOW button on the queue to see if anything has been added recently</p><h3>Have a great day!</h3>", ReturnCommandList(I), True)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "#pin" Then 'the # is a special OTTO command, it won't be listed in the help file, this is one for when people reply to OTTO's management emails
+            ElseIf CList(I) = "#pin" Then 'the # is a special OTTO command, it won't be listed in the help file, this is one for when people reply to OTTO's management emails
                 Dim Errorstring As String = ""
                 Try
-                    Dim FirstPass As String() = BodyCommandList(i).Split(New Char() {"-"c})
+                    Dim FirstPass As String() = BodyCommandList(I).Split(New Char() {"-"c})
                     Dim ThePin As String() = FirstPass(0).Split(New Char() {" "c})
                     Dim EmpTable As New DataTable
-                    Dim EmpIDQuery As String = "SELECT EmpID from Employee where Email='" & ReturnCommandList(i) & "'"
+                    Dim EmpIDQuery As String = "SELECT EmpID from Employee where Email='" & ReturnCommandList(I) & "'"
                     Dim Adapt As New MySqlDataAdapter(EmpIDQuery, SqlConnectionString)
                     Adapt.Fill(EmpTable)
                     Dim PINQuery As String = "INSERT INTO PINS (EmpID,PIN) VALUES('" & EmpTable.Rows(0)(0) & "','" & ThePin(0) & "');"
@@ -389,17 +413,17 @@ Public Class OttoMail
                         Connection.Close()
                     End Using
                     Dim Results = "<h3>Welcome!</h3>Your PIN has been updated. Please keep it handy, since you will need it to log in to the production log and clock in for your time card!<br><p>Please follow these steps to install the production log</p><br><p><b>First the top of this email may be asking you to download pictures. PLEASE CLICK THAT SO YOU CAN FOLLOW THE STEPS.<br>After, click this <a href=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend Production Log\setup.exe"">link</a> to download the program</b></p><br>You'll see a window pop up like this:<br><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend Production Log\attachmentwindow.png""><p><b>Click the OPEN button</b></p><p>You'll then see a window like this (sometimes this takes a while, so please be patient as it loads)</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\applicationinstallwindow.png""><p><b>Click the INSTALL button</b></p><p>After it installs, you'll see the main window</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\dashboardwindow.png""><p><b>Click on the WORK QUEUE button</b></p><p>This is the main work window. You can Log in, see which jobs are in your queue and use it to clock in and out.</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\workqueuewindow.png""><p><b>Go ahead and click LOGIN</b></p><p>A small window will pop up, where you can enter your PIN code and then press ENTER to complete the login process</p><img src=""file:///\\pcpserver\PL_Share\PrimaLend\Primalend production log\loginwindow.png""><p>You should now be logged into the program and ready to get to work. Make sure you press the REFRESH NOW button on the queue to see if anything has been added recently</p><h3>Have a great day!</h3>"
-                    MailIt(Results, ReturnCommandList(i), True)
-                    Otto.LogTextBox.AppendText(vbNewLine & "Updated the PIN for " & ReturnCommandList(i) & " @ " & TimeOfDay)
+                    MailIt(Results, ReturnCommandList(I), True)
+                    Otto.LogTextBox.AppendText(vbNewLine & "Updated the PIN for " & ReturnCommandList(I) & " @ " & TimeOfDay)
                 Catch ex As Exception
                     MailIt(Errorstring & ex.ToString, "jpennock@primalend.com", False)
-                    Otto.LogTextBox.AppendText(vbNewLine & "Error updating the PIN for " & ReturnCommandList(i) & " @ " & TimeOfDay)
+                    Otto.LogTextBox.AppendText(vbNewLine & "Error updating the PIN for " & ReturnCommandList(I) & " @ " & TimeOfDay)
                 End Try
 
-            ElseIf CList(i) = "@FundingRequest" Or CList(i) = "@Funding" Or CList(i) = "@funding" Or CList(i) = "@fundingrequest" Then
+            ElseIf CList(I) = "@FundingRequest" Or CList(I) = "@Funding" Or CList(I) = "@funding" Or CList(I) = "@fundingrequest" Then
                 Try
                     Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
-                    Dim SplitUp As String() = BodyCommandList(i).Split(New Char() {","c})
+                    Dim SplitUp As String() = BodyCommandList(I).Split(New Char() {","c})
                     Dim Results As String = ""
                     For f = 0 To SplitUp.Count - 1
                         Dim UpdateQuery As String = "UPDATE Dealername Set FundingRequest='" & NowDate & "' WHERE Dealership='" & SplitUp(f).Trim & "'"
@@ -412,12 +436,12 @@ Public Class OttoMail
                         Results = Results & " " & UpdateQuery & vbNewLine
                     Next
                     Results = Results & vbNewLine & "Success"
-                    MailIt(Results, ReturnCommandList(i), False)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " set up funding requests for certain dealers @ " & TimeOfDay)
+                    MailIt(Results, ReturnCommandList(I), False)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " set up funding requests for certain dealers @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@OpenJobs" Or CList(i) = "@openjobs" Or CList(i) = "@Openjobs" Then 'Return the open jobs
+            ElseIf CList(I) = "@OpenJobs" Or CList(I) = "@openjobs" Or CList(I) = "@Openjobs" Then 'Return the open jobs
                 Try
                     Dim TodayInt As Integer = DateTime.Today.DayOfWeek
                     Dim Query As String = "SELECT Workflow.JobID, Employee.EmpFirst AS Name, Workflow.DateAssigned, Workflow.TimeAssigned, Workflow.DateStarted, Workflow.TimeStarted, Workflow.DateCompleted, Workflow.TimeCompleted, Workflow.Dealer, Workflow.Job, Workflow.Quantity, Workflow.Comment FROM Workflow INNER JOIN Employee ON Workflow.EmpID=Employee.EmpID WHERE DateCompleted IS NULL ORDER BY Dealer" 'This is the grouped Job List
@@ -437,12 +461,12 @@ Public Class OttoMail
                         Next
                         Results = Results & "</tr><br>"
                     Next
-                    MailIt(Results, ReturnCommandList(i), True)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " checked the open workflow jobs @ " & TimeOfDay)
+                    MailIt(Results, ReturnCommandList(I), True)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " checked the open workflow jobs @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@openqa" Then
+            ElseIf CList(I) = "@openqa" Then
                 Try
                     Dim TodayInt As Integer = DateTime.Today.DayOfWeek
                     Dim Query As String = "SELECT QA.QAID, Employee.EmpFirst AS Name, QA.DateAssigned, QA.DateStarted, QA.TimeStarted, QA.DateCompleted, QA.TimeCompleted, QA.Dealership, QA.Job, QA.RecordedQuantity, QA.Comment FROM QA INNER JOIN Employee ON QA.EmpID=Employee.EmpID WHERE DateCompleted IS NULL ORDER BY Employee.Empfirst" 'This is the grouped Job List
@@ -462,12 +486,12 @@ Public Class OttoMail
                         Next
                         Results = Results & "</tr><br>"
                     Next
-                    MailIt(Results, ReturnCommandList(i), True)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " checked the open QA jobs @ " & TimeOfDay)
+                    MailIt(Results, ReturnCommandList(I), True)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " checked the open QA jobs @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@Schedule" Or CList(i) = "@schedule" Then 'Return the bb schedule
+            ElseIf CList(I) = "@Schedule" Or CList(I) = "@schedule" Then 'Return the bb schedule
                 Try
                     Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
                     Dim TodayInt As Integer = DateTime.Today.DayOfWeek
@@ -489,28 +513,28 @@ Public Class OttoMail
                         Next
                         Results = Results & "</tr><br>"
                     Next
-                    MailIt(Results, ReturnCommandList(i), True)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " checked the BB schedule @ " & TimeOfDay)
+                    MailIt(Results, ReturnCommandList(I), True)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " checked the BB schedule @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@Hello" Or CList(i) = "@Howdy" Or CList(i) = "@Hi" Or CList(i) = "@Help" Or CList(i) = "@help" Or CList(i) = "@hello" Then
+            ElseIf CList(I) = "@Hello" Or CList(I) = "@Howdy" Or CList(I) = "@Hi" Or CList(I) = "@Help" Or CList(I) = "@help" Or CList(I) = "@hello" Then
                 Try
                     Dim ReturnMessage As String = "Hello.<br> Thanks for using my command options.<br>The following items can be used as commands: <br> @Funding or @FundingRequest: Put the names of the Dealerships that you'd like to set as funding requested in the body, separated by commas. (NO SIGNATURE PLEASE) <br>@OpenJobs: Return a table of the jobs not finished (@OpenQA is the list of open QA jobs)<br>@Schedule: Return a table of today's borrowing base schedule.<br>@Time: This will send back your timecard for the last 7 days.<br>@Query: Build a completely custom query (try @tables to see more info on that).<br> Just make an email with the subject Command @(Your Command Here) or cmd @(Your command here) and send it to me!<br><br><h3>Thanks!</h3>"
-                    MailIt(ReturnMessage, ReturnCommandList(i), True)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " said hello and got my auto response @ " & TimeOfDay)
+                    MailIt(ReturnMessage, ReturnCommandList(I), True)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " said hello and got my auto response @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@timesheet" Or CList(i) = "@time" Or CList(i) = "@timecard" Or CList(i) = "@timeclock" Then 'return time card
+            ElseIf CList(I) = "@timesheet" Or CList(I) = "@time" Or CList(I) = "@timecard" Or CList(I) = "@timeclock" Then 'return time card
                 Try
                     Dim TodayInt As Integer = DateTime.Today.DayOfWeek
                     Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
                     Dim Query As String = ""
-                    If ReturnCommandList(i).ToLower = "eoffor@primalend.com" Then
+                    If ReturnCommandList(I).ToLower = "eoffor@primalend.com" Then
                         Query = "SELECT Employee.Empfirst,Timeclock.Timein,Timeclock.Timeout,Timediff(Timeclock.TimeOut,Timeclock.TimeIn) AS Hours,Timeclock.ClockDate From TimeClock INNER JOIN Employee ON Timeclock.EmpID=Employee.EmpID WHERE TimeClock.ClockDate BETWEEN Date_Sub(Now(), INTERVAL 7 DAY) AND NOW();"
                     Else
-                        Query = "SELECT Employee.Empfirst,Timeclock.Timein,Timeclock.Timeout,Timediff(Timeclock.TimeOut,Timeclock.TimeIn) AS Hours,Timeclock.ClockDate From TimeClock INNER JOIN Employee ON Timeclock.EmpID=Employee.EmpID WHERE Employee.Email ='" & ReturnCommandList(i) & "' AND TimeClock.ClockDate BETWEEN Date_Sub(Now(), INTERVAL 7 DAY) AND NOW();"
+                        Query = "SELECT Employee.Empfirst,Timeclock.Timein,Timeclock.Timeout,Timediff(Timeclock.TimeOut,Timeclock.TimeIn) AS Hours,Timeclock.ClockDate From TimeClock INNER JOIN Employee ON Timeclock.EmpID=Employee.EmpID WHERE Employee.Email ='" & ReturnCommandList(I) & "' AND TimeClock.ClockDate BETWEEN Date_Sub(Now(), INTERVAL 7 DAY) AND NOW();"
                     End If
                     Dim Results As String = ""
                     Dim Querytable As New DataTable
@@ -528,18 +552,18 @@ Public Class OttoMail
                         Next
                         Results = Results & "</tr><br>"
                     Next
-                    MailIt(Results, ReturnCommandList(i), True)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " checked their time card @ " & TimeOfDay)
+                    MailIt(Results, ReturnCommandList(I), True)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " checked their time card @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@queryhelp" Or CList(i) = "@tables" Or CList(i) = "@tablelist" Then 'list of tables in our DB (minus the secret ones)
+            ElseIf CList(I) = "@queryhelp" Or CList(I) = "@tables" Or CList(I) = "@tablelist" Then 'list of tables in our DB (minus the secret ones)
                 Dim Results As String = "Hello!<br>The following is a list of the <b>TABLES</b> found in our database.<b><br>batch<br>contactlist<br>dealername<br>employee<br>extensions<br>jobname<br>occurrences<br>qa<br>timeclock<br>workflow<br></b>If you want to see the columns of a specific table, try emailing me cmd @tableinfo and put the table name in the body of your email.<br> <h3>Thanks!</h3>"
-                MailIt(Results, ReturnCommandList(i), True)
-                Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " checked the table names @ " & TimeOfDay)
-            ElseIf CList(i) = "@tableinfo" Then 'columns of a specific table
+                MailIt(Results, ReturnCommandList(I), True)
+                Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " checked the table names @ " & TimeOfDay)
+            ElseIf CList(I) = "@tableinfo" Then 'columns of a specific table
                 Try
-                    Dim table As String = BodyCommandList(i).ToLower
+                    Dim table As String = BodyCommandList(I).ToLower
                     Dim Query As String = "SELECT * From " & table
                     Dim Results As String = ""
                     Dim Querytable As New DataTable
@@ -549,25 +573,25 @@ Public Class OttoMail
                     For ch = 0 To Querytable.Columns.Count - 1
                         Results = Results & "<th>" & Querytable.Columns(ch).ColumnName & ",</th>"
                     Next
-                    MailIt(Results, ReturnCommandList(i), True)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " checked the table info @ " & TimeOfDay)
+                    MailIt(Results, ReturnCommandList(I), True)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " checked the table info @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
-            ElseIf CList(i) = "@ip" Then
+            ElseIf CList(I) = "@ip" Then
                 Try
                     Dim wb As New System.Net.WebClient
                     Dim s As String = wb.DownloadString("http://whatsmyip.us/showipsimple.php") 'this php form is literally just one line that says "console.write(yourip) or something :)
                     Dim results As String = "I'm pretty sure this is my external IP: " & s
-                    MailIt(results, ReturnCommandList(i), False)
-                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " asked for the IP address @ " & TimeOfDay)
+                    MailIt(results, ReturnCommandList(I), False)
+                    Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " asked for the IP address @ " & TimeOfDay)
                 Catch ex As Exception
-                    MailIt(ex.ToString, ReturnCommandList(i), False)
+                    MailIt(ex.ToString, ReturnCommandList(I), False)
                 End Try
             Else
-                Dim ReturnMessage As String = "Hello.<br> Thanks for using my command options.<br>The command you sent <b>(" & CList(i) & ")</b> is not a valid command right now.<br>The following items can be used as commands: <br> @Funding or @FundingRequest: Put the names of the Dealerships that you'd like to set as funding requested in the body, separated by commas. (NO SIGNATURE PLEASE) <br>@OpenJobs: Return a table of the jobs not finished (@OpenQA is the list of QA jobs that are open)<br>@Schedule: Return a table of today's borrowing base schedule.<br>@Time: This will send back your timecard for the last 7 days.<br>@Query: Build a completely custom query (try @tables to see more info on that).<br> Just make an email with the subject Command @(Your Command Here) or cmd @(Your command here) and send it to me!<br><br><h3>Thanks!</h3>"
-                MailIt(ReturnMessage, ReturnCommandList(i), True)
-                Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(i) & " tried a command that didn't exist @ " & TimeOfDay)
+                Dim ReturnMessage As String = "Hello.<br> Thanks for using my command options.<br>The command you sent <b>(" & CList(I) & ")</b> is not a valid command right now.<br>The following items can be used as commands: <br> @Funding or @FundingRequest: Put the names of the Dealerships that you'd like to set as funding requested in the body, separated by commas. (NO SIGNATURE PLEASE) <br>@OpenJobs: Return a table of the jobs not finished (@OpenQA is the list of QA jobs that are open)<br>@Schedule: Return a table of today's borrowing base schedule.<br>@Time: This will send back your timecard for the last 7 days.<br>@Query: Build a completely custom query (try @tables to see more info on that).<br> Just make an email with the subject Command @(Your Command Here) or cmd @(Your command here) and send it to me!<br><br><h3>Thanks!</h3>"
+                MailIt(ReturnMessage, ReturnCommandList(I), True)
+                Otto.LogTextBox.AppendText(vbNewLine & ReturnCommandList(I) & " tried a command that didn't exist @ " & TimeOfDay)
             End If
         Next
 
@@ -616,33 +640,33 @@ Public Class OttoMail
             Try
                 Dim Results As String = ""
                 Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
-                For i = 0 To BBSentList.Items.Count - 1
+                For I = 0 To BBSentList.Items.Count - 1
                     Dim UpdateQuery As String = ""
-                    If BBSentList.Items(i) = "JR's" Then
+                    If BBSentList.Items(I) = "JR's" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='JRs'"
-                    ElseIf BBSentList.Items(i).ToString.ToLower = "autoflex" Or BBSentList.Items(i) = "Autoflex" Then
+                    ElseIf BBSentList.Items(I).ToString.ToLower = "autoflex" Or BBSentList.Items(I) = "Autoflex" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='Auto Flex'"
-                    ElseIf BBSentList.Items(i) = "200 &" Then
+                    ElseIf BBSentList.Items(I) = "200 &" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='200 & West'"
-                    ElseIf BBSentList.Items(i) = "JAKC_JAR VP" Or BBSentList.Items(i) = "JAKC_JAR" Or BBSentList.Items(i) = "JAKC/JAR" Then
+                    ElseIf BBSentList.Items(I) = "JAKC_JAR VP" Or BBSentList.Items(I) = "JAKC_JAR" Or BBSentList.Items(I) = "JAKC/JAR" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='JAKC' OR Dealership='JAR'"
-                    ElseIf BBSentList.Items(i) = "AAA" Then
+                    ElseIf BBSentList.Items(I) = "AAA" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='Austin Auto'"
-                    ElseIf BBSentList.Items(i) = "4 Your" Then
+                    ElseIf BBSentList.Items(I) = "4 Your" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='4 Your Car'"
-                    ElseIf BBSentList.Items(i) = "Approved Auto" Then
+                    ElseIf BBSentList.Items(I) = "Approved Auto" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='Approved'"
-                    ElseIf BBSentList.Items(i) = "Foreign Auto" Then
+                    ElseIf BBSentList.Items(I) = "Foreign Auto" Then
                         UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='Foreign'"
                     Else
-                        UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='" & BBSentList.Items(i) & "'"
+                        UpdateQuery = "UPDATE Dealername SET BBSentDate='" & NowDate & "' WHERE Dealership='" & BBSentList.Items(I) & "'"
                     End If
                     Using Connection As New MySqlConnection(SqlConnectionString)
                         Dim UpdateCommand As New MySqlCommand(UpdateQuery, Connection)
                         Connection.Open()
                         UpdateCommand.ExecuteNonQuery()
                         Connection.Close()
-                        Results = Results & " " & BBSentList.Items(i) & " " & UpdateQuery
+                        Results = Results & " " & BBSentList.Items(I) & " " & UpdateQuery
                         errorresult = Results
                     End Using
                 Next

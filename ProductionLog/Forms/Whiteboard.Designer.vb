@@ -23,14 +23,14 @@ Partial Class Whiteboard
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim TreeNode9 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Funding Requested")
-        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Borrowing Base")
-        Dim TreeNode11 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contracts")
-        Dim TreeNode12 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contract Exceptions")
-        Dim TreeNode13 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contract Modifications")
-        Dim TreeNode14 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contract Titles")
-        Dim TreeNode15 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Floor Titles")
-        Dim TreeNode16 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Auction Slips")
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Funding Requested")
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Borrowing Base")
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contracts")
+        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contract Exceptions")
+        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contract Modifications")
+        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Contract Titles")
+        Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Floor Titles")
+        Dim TreeNode8 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Auction Slips")
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Whiteboard))
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
@@ -125,7 +125,7 @@ Partial Class Whiteboard
         Me.TrackBar1.Maximum = 7
         Me.TrackBar1.Minimum = 1
         Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(94, 42)
+        Me.TrackBar1.Size = New System.Drawing.Size(94, 45)
         Me.TrackBar1.TabIndex = 12
         Me.TrackBar1.Value = 1
         '
@@ -136,7 +136,7 @@ Partial Class Whiteboard
         Me.UpdateTrackBar.Maximum = 12
         Me.UpdateTrackBar.Minimum = 1
         Me.UpdateTrackBar.Name = "UpdateTrackBar"
-        Me.UpdateTrackBar.Size = New System.Drawing.Size(104, 42)
+        Me.UpdateTrackBar.Size = New System.Drawing.Size(104, 45)
         Me.UpdateTrackBar.TabIndex = 11
         Me.UpdateTrackBar.Value = 3
         '
@@ -223,11 +223,11 @@ Partial Class Whiteboard
         '
         Me.ScheduleTreeview.Location = New System.Drawing.Point(809, 92)
         Me.ScheduleTreeview.Name = "ScheduleTreeview"
-        TreeNode9.Name = "FundingRequestNode"
-        TreeNode9.Text = "Funding Requested"
-        TreeNode10.Name = "BorrowingBaseNode"
-        TreeNode10.Text = "Borrowing Base"
-        Me.ScheduleTreeview.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode9, TreeNode10})
+        TreeNode1.Name = "FundingRequestNode"
+        TreeNode1.Text = "Funding Requested"
+        TreeNode2.Name = "BorrowingBaseNode"
+        TreeNode2.Text = "Borrowing Base"
+        Me.ScheduleTreeview.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2})
         Me.ScheduleTreeview.Size = New System.Drawing.Size(293, 481)
         Me.ScheduleTreeview.TabIndex = 3
         '
@@ -245,19 +245,19 @@ Partial Class Whiteboard
         '
         Me.CollateralTreeView.Location = New System.Drawing.Point(25, 95)
         Me.CollateralTreeView.Name = "CollateralTreeView"
-        TreeNode11.Name = "ContractNode"
-        TreeNode11.Text = "Contracts"
-        TreeNode12.Name = "ContractExNode"
-        TreeNode12.Text = "Contract Exceptions"
-        TreeNode13.Name = "ContractModNode"
-        TreeNode13.Text = "Contract Modifications"
-        TreeNode14.Name = "ContractTitleNode"
-        TreeNode14.Text = "Contract Titles"
-        TreeNode15.Name = "FloorTitleNode"
-        TreeNode15.Text = "Floor Titles"
-        TreeNode16.Name = "AuctionSlipNode"
-        TreeNode16.Text = "Auction Slips"
-        Me.CollateralTreeView.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode11, TreeNode12, TreeNode13, TreeNode14, TreeNode15, TreeNode16})
+        TreeNode3.Name = "ContractNode"
+        TreeNode3.Text = "Contracts"
+        TreeNode4.Name = "ContractExNode"
+        TreeNode4.Text = "Contract Exceptions"
+        TreeNode5.Name = "ContractModNode"
+        TreeNode5.Text = "Contract Modifications"
+        TreeNode6.Name = "ContractTitleNode"
+        TreeNode6.Text = "Contract Titles"
+        TreeNode7.Name = "FloorTitleNode"
+        TreeNode7.Text = "Floor Titles"
+        TreeNode8.Name = "AuctionSlipNode"
+        TreeNode8.Text = "Auction Slips"
+        Me.CollateralTreeView.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode4, TreeNode5, TreeNode6, TreeNode7, TreeNode8})
         Me.CollateralTreeView.Size = New System.Drawing.Size(278, 745)
         Me.CollateralTreeView.TabIndex = 1
         '

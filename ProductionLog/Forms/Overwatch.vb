@@ -138,6 +138,7 @@ Public Class Overwatch
         CheckTable.Columns.Add("Remove")
         FileCheckTable.Columns.Add("Name")
         FileCheckTable.Columns.Add("Remove")
+        FileCheckTable.Columns.Add("FileName")
         Palintir_Thread = New Thread(AddressOf Scan)
         Palintir_Thread.IsBackground = True
         Palintir_Thread.Start()
@@ -184,6 +185,7 @@ Public Class Overwatch
                 'Get a list of ALL of the open windows associated with the process   
                 Dim windows As IDictionary(Of IntPtr, String) = GetOpenWindowsFromPID(P.Id)
                 For Each kvp As KeyValuePair(Of IntPtr, String) In windows
+                    '**** THIS AREA IS COMMENTED OUT BECAUSE IT LITERALLY TAKES EVERY WINDOW THAT IS OPEN ON SOMEONE'S PC AND PUTS IT IN THE DATABASE.
                     'Dim NowTime As String = DateTime.Now.ToString("HH:mm:ss")
                     'Dim NowDate As String = DateTime.Now.ToString("yyyy-MM-dd")
                     'Dim InsertLog As String = "INSERT INTO Palantir (EmpID,Date,Time,Window) VALUES ('" & EmpIDLabel.Text & "','" & NowDate & "','" & NowTime & "','" & kvp.Value.ToString & "');"
@@ -197,6 +199,7 @@ Public Class Overwatch
                     'Else
                     '    WindowList.Add(kvp.Value.ToString)
                     'End If
+                    '**** DO NOT USE, UNTIL YOU CAN FIX THE DUPLICATE ISSUE.
                     Dim tosplit() As String = kvp.Value.ToString.Split(New Char() {"-"c})
                     If tosplit.Count > 1 Then
                         KVPList.Add(tosplit(1).ToString.Trim.ToLower)
@@ -211,6 +214,7 @@ Public Class Overwatch
                     For bb = 0 To FileTable.Rows.Count - 1
                         If FileCheckTable.Rows(i)(0).ToString = FileTable.Rows(bb)(0).ToString Then
                             FileCheckTable.Rows(i)(1) = "b" 'if they have a b, work from there.
+                            FileCheckTable.Rows(i)(2) = FileCheckTable.Rows(i)(0)
                             FileCheckTable.Rows(i)(0) = FileTable.Rows(bb)(1).ToString
                         End If
                     Next
@@ -227,14 +231,18 @@ Public Class Overwatch
                         If CheckTable.Rows(i)(1) = "f" Then
                             ' MsgBox("remove")
                             'JobEnd(CheckTable.Rows(i)(0).ToString) 'This only works of there are more than one BBs open. I'll see what else I can do 8/21/15
-                            RemoveComboItem(BBComboBox, i)
+                            RemoveComboItem(BBComboBox, i) 'This is to remove the combobox items.
                         End If
                     Next
                 End If
                 For i = 0 To FileCheckTable.Rows.Count - 1
                     If FileCheckTable.Rows(i)(1) = "b" Then
                         'MsgBox("add")
-                        AddComboItem(BBComboBox, FileCheckTable.Rows(i)(0).ToString)
+                        AddComboItem(BBComboBox, FileCheckTable.Rows(i)(0).ToString) 'this is to ADD combo box items
+                        If File.Exists("P:\Otto\" & FileCheckTable(i)(2).ToString & ".xlsx") Then
+                        Else
+                            File.Copy("P:\PrimaLend\Customer Affairs\Current CIFR Documents\" & FileCheckTable.Rows(i)(2).ToString & ".xlsx", "P:\Otto\" & FileCheckTable.Rows(i)(2).ToString & ".xlsx", True)
+                        End If
                     End If
                 Next
                 InExcel = True

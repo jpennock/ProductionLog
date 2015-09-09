@@ -19,28 +19,7 @@ Public Class Dashboard
     Dim SqlConnectionString As String = "Server=192.168.1.34; Database=TimeLogDB; User id=clerk; Password=12345;" 'NUC Database
     Dim StillHya As Boolean = False
 
-
-
-    Private Sub Dashboard_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
-
-    End Sub
-    Private Sub Dashboard_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-
-    End Sub
-
-    Private Sub Dashboard_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-
-    End Sub
-
-    Private Sub Dashboard_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
-
-    End Sub
-
-    Private Sub Dashboard_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-        If e.KeyCode = Keys.F1 Then
-            Viewer.Show()
-        End If
-    End Sub
+    
 
     Private Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'TheCIFR.Show() 'This is the MAIL window
@@ -174,12 +153,6 @@ Public Class Dashboard
             StillHere.Stop()
         ElseIf TimeOfDay = "11:59:00 PM" Then
             Me.Dispose()
-        End If
-    End Sub
-
-    Private Sub FormSkin1_KeyUp(sender As Object, e As KeyEventArgs) Handles FormSkin1.KeyUp
-        If e.KeyCode = Keys.F1 Then
-            Viewer.Show()
         End If
     End Sub
 

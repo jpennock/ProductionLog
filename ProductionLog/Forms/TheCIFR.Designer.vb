@@ -26,14 +26,17 @@ Partial Class TheCIFR
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TheCIFR))
         Me.SuccessTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.MailTreeVIew = New System.Windows.Forms.TreeView()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuccessLabel = New System.Windows.Forms.Label()
         Me.FlatButton1 = New ProductionLog.FlatButton()
         Me.DealerComboBox = New System.Windows.Forms.ComboBox()
         Me.TrackingNumberLabel = New System.Windows.Forms.Label()
         Me.TrackingTextBox = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.MailTreeVIew = New System.Windows.Forms.TreeView()
+        Me.RightClickMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.RemoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FormSkin1.SuspendLayout()
+        Me.RightClickMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'SuccessTimer
@@ -52,7 +55,7 @@ Partial Class TheCIFR
         Me.FormSkin1.Controls.Add(Me.TrackingNumberLabel)
         Me.FormSkin1.Controls.Add(Me.TrackingTextBox)
         Me.FormSkin1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FormSkin1.FlatColor = System.Drawing.Color.Red
+        Me.FormSkin1.FlatColor = System.Drawing.Color.SteelBlue
         Me.FormSkin1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
         Me.FormSkin1.HeaderColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(49, Byte), Integer))
         Me.FormSkin1.HeaderMaximize = False
@@ -61,6 +64,24 @@ Partial Class TheCIFR
         Me.FormSkin1.Size = New System.Drawing.Size(752, 584)
         Me.FormSkin1.TabIndex = 0
         Me.FormSkin1.Text = "The Mail"
+        '
+        'MailTreeVIew
+        '
+        Me.MailTreeVIew.ContextMenuStrip = Me.RightClickMenu
+        Me.MailTreeVIew.Location = New System.Drawing.Point(281, 91)
+        Me.MailTreeVIew.Name = "MailTreeVIew"
+        Me.MailTreeVIew.Size = New System.Drawing.Size(388, 474)
+        Me.MailTreeVIew.TabIndex = 8
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.Location = New System.Drawing.Point(277, 59)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(105, 21)
+        Me.Label1.TabIndex = 7
+        Me.Label1.Text = "Mail received:"
         '
         'SuccessLabel
         '
@@ -114,22 +135,17 @@ Partial Class TheCIFR
         Me.TrackingTextBox.Size = New System.Drawing.Size(212, 29)
         Me.TrackingTextBox.TabIndex = 0
         '
-        'Label1
+        'RightClickMenu
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Location = New System.Drawing.Point(277, 59)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(105, 21)
-        Me.Label1.TabIndex = 7
-        Me.Label1.Text = "Mail received:"
+        Me.RightClickMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveToolStripMenuItem})
+        Me.RightClickMenu.Name = "RightClickMenu"
+        Me.RightClickMenu.Size = New System.Drawing.Size(118, 26)
         '
-        'MailTreeVIew
+        'RemoveToolStripMenuItem
         '
-        Me.MailTreeVIew.Location = New System.Drawing.Point(281, 91)
-        Me.MailTreeVIew.Name = "MailTreeVIew"
-        Me.MailTreeVIew.Size = New System.Drawing.Size(388, 474)
-        Me.MailTreeVIew.TabIndex = 8
+        Me.RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem"
+        Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(117, 22)
+        Me.RemoveToolStripMenuItem.Text = "Remove"
         '
         'TheCIFR
         '
@@ -145,6 +161,7 @@ Partial Class TheCIFR
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.FormSkin1.ResumeLayout(False)
         Me.FormSkin1.PerformLayout()
+        Me.RightClickMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -157,4 +174,6 @@ Partial Class TheCIFR
     Friend WithEvents SuccessLabel As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents MailTreeVIew As System.Windows.Forms.TreeView
+    Friend WithEvents RightClickMenu As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents RemoveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class
