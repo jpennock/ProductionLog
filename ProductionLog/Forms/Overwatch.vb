@@ -136,6 +136,7 @@ Public Class Overwatch
         FileAdapt.Fill(FileTable) 'Hopefully you won't have to fill this one more than once per load. I'll make sure that is the case through some tests
         CheckTable.Columns.Add("Name")
         CheckTable.Columns.Add("Remove")
+        CheckTable.Columns.Add("FileName")
         FileCheckTable.Columns.Add("Name")
         FileCheckTable.Columns.Add("Remove")
         FileCheckTable.Columns.Add("FileName")
@@ -229,8 +230,19 @@ Public Class Overwatch
                     Next
                     For i = CheckTable.Rows.Count - 1 To 0 Step -1 'use this one to remove any checktable item that is marked f still, proving that you aren't currently open in any of those windows
                         If CheckTable.Rows(i)(1) = "f" Then
-                            ' MsgBox("remove")
-                            'JobEnd(CheckTable.Rows(i)(0).ToString) 'This only works of there are more than one BBs open. I'll see what else I can do 8/21/15
+                            Dim filename As String = ""
+                            Dim filenamequery As String = "select bbfilename from dealername where dealership='" & CheckTable.Rows(i)(0).ToString & "'"
+                            Dim filenameadapt As New MySqlDataAdapter(filenamequery, SqlConnectionString)
+                            Dim filenametable As New DataTable
+                            filenameadapt.Fill(filenametable)
+                            If filenametable.Rows.Count > 0 Then
+                                filename = filenametable.Rows(0)(0).ToString
+                            End If
+                            If File.Exists("P:\Otto\" & filename & ".xlsx") Then
+                            Else
+
+                                File.Copy("P:\PrimaLend\Customer Affairs\Current CIFR Documents\" & filename & ".xlsx", "P:\Otto\" & filename & ".xlsx", True)
+                            End If
                             RemoveComboItem(BBComboBox, i) 'This is to remove the combobox items.
                         End If
                     Next
@@ -239,29 +251,39 @@ Public Class Overwatch
                     If FileCheckTable.Rows(i)(1) = "b" Then
                         'MsgBox("add")
                         AddComboItem(BBComboBox, FileCheckTable.Rows(i)(0).ToString) 'this is to ADD combo box items
-                        If File.Exists("P:\Otto\" & FileCheckTable(i)(2).ToString & ".xlsx") Then
-                        Else
-                            File.Copy("P:\PrimaLend\Customer Affairs\Current CIFR Documents\" & FileCheckTable.Rows(i)(2).ToString & ".xlsx", "P:\Otto\" & FileCheckTable.Rows(i)(2).ToString & ".xlsx", True)
-                        End If
                     End If
                 Next
                 InExcel = True
             Else
+                If BBComboBox.Items.Count > 0 Then
+                    Dim filename As String = ""
+                    Dim filenamequery As String = "select bbfilename from dealername where dealership='" & BBComboBox.Items(0).ToString & "'"
+                    Dim filenameadapt As New MySqlDataAdapter(filenamequery, SqlConnectionString)
+                    Dim filenametable As New DataTable
+                    filenameadapt.Fill(filenametable)
+                    If filenametable.Rows.Count > 0 Then
+                        filename = filenametable.Rows(0)(0).ToString
+                    End If
+                    If File.Exists("P:\Otto\" & filename & ".xlsx") Then
+                    Else
+                        File.Copy("P:\PrimaLend\Customer Affairs\Current CIFR Documents\" & filename & ".xlsx", "P:\Otto\" & filename & ".xlsx", True)
+                    End If
+                End If
                 RemoveComboItem(BBComboBox, 0) 'the index here will have to be dynamic in order to properly remove the item.
                 InExcel = False
             End If
-            If Me.Size.Height <= 60 Then
-                Dim MessageQ As String = "Select * from messages where empid=" & EmpIDLabel.Text & " and isread=0"
-                Dim MessageT As New DataTable
-                Dim MessageA As New MySqlDataAdapter(MessageQ, SqlConnectionString)
-                MessageA.Fill(MessageT)
-                If MessageT.Rows.Count > 0 Then
-                    CheckMessages(IDTextBox, MessageT.Rows(0)(0).ToString)
+                If Me.Size.Height <= 60 Then
+                    Dim MessageQ As String = "Select * from messages where empid=" & EmpIDLabel.Text & " and isread=0"
+                    Dim MessageT As New DataTable
+                    Dim MessageA As New MySqlDataAdapter(MessageQ, SqlConnectionString)
+                    MessageA.Fill(MessageT)
+                    If MessageT.Rows.Count > 0 Then
+                        CheckMessages(IDTextBox, MessageT.Rows(0)(0).ToString)
+                    End If
                 End If
-            End If
 SLEEPYTIME:
-            'Counter += 1
-            Thread.Sleep(500)
+                'Counter += 1
+                Thread.Sleep(500)
         End While
     End Sub
 
