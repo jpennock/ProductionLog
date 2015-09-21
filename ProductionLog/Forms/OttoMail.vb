@@ -142,7 +142,25 @@ Public Class OttoMail
                                 Dim contentid = msgpart.ContentId
                                 System.IO.Directory.CreateDirectory(thefolder)
                                 System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
-                                Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
+                                Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some report emails. @ " & TimeOfDay)
+                            Catch ex As Exception
+                                MsgBox(ex.ToString)
+                            End Try
+                        Next
+                    End If
+                    If emailA.ToLower = "zj@primalend.com" Then
+                        For Each msgpart As MessagePart In Message.FindAllAttachments
+                            Try
+                                Dim eSubject As String = Message.Headers.Subject.ToString
+                                Dim esplit() As String = eSubject.Split(New Char() {" "c})
+                                Dim NowDate As String = DateTime.Now.ToString("yyyy MM dd")
+                                Dim thefile = esplit(0) & "_" & msgpart.FileName & " " & NowDate
+                                thefolder = "P:\aaa-Raw Dealer Extract from DMS\"
+                                Dim filetype = msgpart.ContentType
+                                Dim contentid = msgpart.ContentId
+                                System.IO.Directory.CreateDirectory(thefolder)
+                                System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
+                                Otto.LogTextBox.AppendText(vbNewLine & "HOWL NOISE, THE WOLF PACK SENDS REPORTS. @ " & TimeOfDay)
                             Catch ex As Exception
                                 MsgBox(ex.ToString)
                             End Try
