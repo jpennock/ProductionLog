@@ -17,9 +17,9 @@ Public Class Manager
             Dim Todayint As Integer = DateTime.Today.DayOfWeek
             Dim FundQuery As String = "SELECT Dealership,BBSentDate from dealername where fundingrequest='" & NowDate & "'"
             Dim FundAdapt As New MySqlDataAdapter(FundQuery, SqlConnectionString)
-            Dim BBQuery As String = "SELECT Dealership,BBSentDate from dealername where (schedule='" & Todayint & "' or schedule='0') AND (fundingrequest <> '" & NowDate & "' or fundingrequest IS NULL)"
+            Dim BBQuery As String = "SELECT Dealership,BBSentDate from dealername where (schedule='" & Todayint & "' or schedule='0') AND (fundingrequest <> '" & NowDate & "' or fundingrequest IS NULL) and isactive=1"
             Dim BBAdapt As New MySqlDataAdapter(BBQuery, SqlConnectionString)
-            Dim FrozenQuery As String = "SELECT Dealership from dealername where isFrozen=1"
+            Dim FrozenQuery As String = "SELECT Dealership from dealername where isFrozen=1 and isactive='1'"
             Dim FrozenAdapt As New MySqlDataAdapter(FrozenQuery, SqlConnectionString)
             FrozenAdapt.Fill(FrozenTable)
             FundAdapt.Fill(FundTable)
