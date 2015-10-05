@@ -40,6 +40,7 @@ Public Class Dashboard
             If teamtable.Rows.Count > 0 Then
                 If teamtable.Rows(0)(0) = 9 Then
                     Overwatch.Show()
+                    Overwatch.Visible = False
                     OttoButton.Visible = True
                     FlatButton1.Visible = True
                 ElseIf teamtable.Rows(0)(0) = 1 Then

@@ -296,7 +296,7 @@ SLEEPYTIME:
                 ComboObject.Items.Add(Value)
                 ComboObject.SelectedIndex = ComboObject.Items.Count - 1
                 If inJob = False Then
-                    ShowJobs()
+                    'ShowJobs()
                 End If
             End If
         End If

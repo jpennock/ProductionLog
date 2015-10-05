@@ -189,6 +189,22 @@ Public Class OttoMail
                     Next
                 End If
 
+                If Message.Headers.From.Address.ToString.ToLower = "tsimmons@aucs1.com" Then
+                    For Each msgpart As MessagePart In Message.FindAllAttachments
+                        Try
+                            Dim NowTime As String = DateTime.Now.ToString("HH mm ss")
+                            Dim thefile = msgpart.FileName
+                            Dim filetype = msgpart.ContentType
+                            Dim contentid = msgpart.ContentId
+                            System.IO.File.WriteAllBytes("O:\AUCS" & "\" & thefile, msgpart.Body)
+                            Otto.LogTextBox.AppendText(vbNewLine & "AUCS sent a scan in to collateral @ " & TimeOfDay)
+                            'MsgBox("success: " & thefile & " " & filetype.ToString)
+                        Catch ex As Exception
+                            MsgBox(ex.ToString)
+                        End Try
+                    Next
+                End If
+
                 If Message.Headers.From.Address.ToString.ToLower = "jpennock@primalend.com" Or Message.Headers.From.Address.ToString.ToLower = "jmpennock@primalend.com" Then
                     For Each msgpart As MessagePart In Message.FindAllAttachments
                         Try
