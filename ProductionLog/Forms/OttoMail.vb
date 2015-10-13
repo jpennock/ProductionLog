@@ -126,7 +126,7 @@ Public Class OttoMail
                                 System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
                                 Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some funding attachments and emails. @ " & TimeOfDay)
                             Catch ex As Exception
-                                MsgBox(ex.ToString)
+                                'MsgBox(ex.ToString)
                             End Try
                         Next
                     End If
@@ -144,7 +144,7 @@ Public Class OttoMail
                                 System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
                                 Otto.LogTextBox.AppendText(vbNewLine & "Attempted to download some report emails. @ " & TimeOfDay)
                             Catch ex As Exception
-                                MsgBox(ex.ToString)
+                                'MsgBox(ex.ToString)
                             End Try
                         Next
                     End If
@@ -162,7 +162,7 @@ Public Class OttoMail
                                 System.IO.File.WriteAllBytes(thefolder & thefile, msgpart.Body)
                                 Otto.LogTextBox.AppendText(vbNewLine & "HOWL NOISE, THE WOLF PACK SENDS REPORTS. @ " & TimeOfDay)
                             Catch ex As Exception
-                                MsgBox(ex.ToString)
+                                'MsgBox(ex.ToString)
                             End Try
                         Next
                     End If
@@ -184,7 +184,7 @@ Public Class OttoMail
                             Otto.LogTextBox.AppendText(vbNewLine & "Ontario sent a scan in to collateral @ " & TimeOfDay)
                             'MsgBox("success: " & thefile & " " & filetype.ToString)
                         Catch ex As Exception
-                            MsgBox(ex.ToString)
+                            'MsgBox(ex.ToString)
                         End Try
                     Next
                 End If
@@ -200,7 +200,7 @@ Public Class OttoMail
                             Otto.LogTextBox.AppendText(vbNewLine & "AUCS sent a scan in to collateral @ " & TimeOfDay)
                             'MsgBox("success: " & thefile & " " & filetype.ToString)
                         Catch ex As Exception
-                            MsgBox(ex.ToString)
+                            'MsgBox(ex.ToString)
                         End Try
                     Next
                 End If
@@ -216,7 +216,7 @@ Public Class OttoMail
                             Otto.LogTextBox.AppendText(vbNewLine & "Found an attachment from " & Message.Headers.From.Address.ToString & " @ " & TimeOfDay)
                             'MsgBox("success: " & thefile & " " & filetype.ToString)
                         Catch ex As Exception
-                            MsgBox(ex.ToString)
+                            'MsgBox(ex.ToString)
                         End Try
                     Next
                 End If
