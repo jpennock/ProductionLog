@@ -278,7 +278,6 @@ Partial Class CollateralLog
         '
         Me.CollateralComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CollateralComboBox.FormattingEnabled = True
-        Me.CollateralComboBox.Items.AddRange(New Object() {"Contracts", "Contract Corrections", "Contract Modifications", "Contract Titles", "Lien Receipts", "Floor Titles", "Auction Slips"})
         Me.CollateralComboBox.Location = New System.Drawing.Point(3, 131)
         Me.CollateralComboBox.Name = "CollateralComboBox"
         Me.CollateralComboBox.Size = New System.Drawing.Size(161, 29)

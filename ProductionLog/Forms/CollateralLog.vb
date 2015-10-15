@@ -196,6 +196,17 @@ Public Class CollateralLog
             MsgBox("Couldn't load the dealer list " & ex.ToString)
         End Try
         Try
+            Dim Query As String = "SELECT * From Collateral"
+            Dim CollateralAdapt As New MySqlDataAdapter(Query, SqlConnectionString)
+            Dim CollateralTable As New DataTable
+            CollateralAdapt.Fill(CollateralTable)
+            For i = 0 To CollateralTable.Rows.Count - 1
+                CollateralComboBox.Items.Add(CollateralTable.Rows(i)(1))
+            Next
+        Catch ex As Exception
+            MsgBox("Couldn't load the collateral types")
+        End Try
+        Try
             Dim Query As String = "SELECT ismonitored from employee where empid='" & Clerk.EmployeeID.Text & "'"
             Dim EmpAdapt As New MySqlDataAdapter(Query, SqlConnectionString)
             Dim EmpTable As New DataTable
