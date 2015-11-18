@@ -37,7 +37,6 @@ Partial Class Manager
         Me.ManagementTimer = New System.Windows.Forms.Timer(Me.components)
         Me.SuccessTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
-        Me.NewsLabel = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.WorkTree = New System.Windows.Forms.TreeView()
@@ -61,7 +60,6 @@ Partial Class Manager
         Me.FormSkin1.BackColor = System.Drawing.Color.White
         Me.FormSkin1.BaseColor = System.Drawing.Color.Black
         Me.FormSkin1.BorderColor = System.Drawing.Color.Black
-        Me.FormSkin1.Controls.Add(Me.NewsLabel)
         Me.FormSkin1.Controls.Add(Me.PictureBox3)
         Me.FormSkin1.Controls.Add(Me.PictureBox2)
         Me.FormSkin1.Controls.Add(Me.WorkTree)
@@ -80,19 +78,6 @@ Partial Class Manager
         Me.FormSkin1.Name = "FormSkin1"
         Me.FormSkin1.Size = New System.Drawing.Size(1600, 900)
         Me.FormSkin1.TabIndex = 0
-        '
-        'NewsLabel
-        '
-        Me.NewsLabel.AutoSize = True
-        Me.NewsLabel.BackColor = System.Drawing.Color.Transparent
-        Me.NewsLabel.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.NewsLabel.ForeColor = System.Drawing.Color.Transparent
-        Me.NewsLabel.Location = New System.Drawing.Point(637, 865)
-        Me.NewsLabel.Name = "NewsLabel"
-        Me.NewsLabel.Size = New System.Drawing.Size(380, 32)
-        Me.NewsLabel.TabIndex = 45
-        Me.NewsLabel.Text = "Possible News Text in this ZONE"
-        Me.NewsLabel.Visible = False
         '
         'PictureBox3
         '
@@ -242,5 +227,4 @@ Partial Class Manager
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
     Friend WithEvents PictureBox3 As System.Windows.Forms.PictureBox
-    Friend WithEvents NewsLabel As System.Windows.Forms.Label
 End Class

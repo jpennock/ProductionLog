@@ -43,7 +43,7 @@ Public Class Dashboard
                     Overwatch.Visible = False
                     OttoButton.Visible = True
                     FlatButton1.Visible = True
-                    TheCIFR.Show() ' This is the Mail window
+                    'TheCIFR.Show() ' This is the Mail window
                 ElseIf teamtable.Rows(0)(0) = 1 Then
                     FlatButton1.Visible = True
                 Else
