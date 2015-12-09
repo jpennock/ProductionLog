@@ -34,7 +34,6 @@ Public Class Dashboard
             Dim teamtable As New DataTable
             teamadapt.Fill(teamtable)
 
-
             '** USE THIS AREA TO ENABLE SPECIFIC ITEMS FOR TEAMS TO TEST
             '** BETA TEST AREA:
             If teamtable.Rows.Count > 0 Then
@@ -43,7 +42,9 @@ Public Class Dashboard
                     Overwatch.Visible = False
                     OttoButton.Visible = True
                     FlatButton1.Visible = True
-                    TheCIFR.Show() ' This is the Mail window
+                    'MainParent.Show() 'this is the upload window for big VIN uploads
+                    'TheCIFR.Show() ' This is the Mail window
+                    FileCabinetPopup.show()
                 ElseIf teamtable.Rows(0)(0) = 1 Then
                     FlatButton1.Visible = True
                 Else
@@ -176,8 +177,9 @@ Public Class Dashboard
     Private Sub FlatButton1_Click_2(sender As Object, e As EventArgs) Handles FlatButton1.Click
         'Manager.Show()
         'Overwatch.Show()
-        DBA.Show()
+        DBA.Show() 'Collateral
         'MsgBox(DateTime.Today.DayOfWeek)
-
+        'VariancePopUp.Show() 'Compliance
+        'FileCabinetPopup.Show() 'Report viewer testing
     End Sub
 End Class

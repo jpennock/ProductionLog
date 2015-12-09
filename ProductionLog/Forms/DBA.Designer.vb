@@ -26,6 +26,8 @@ Partial Class DBA
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DBA))
         Me.SuccessTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FormSkin1 = New ProductionLog.FormSkin()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.BatchIDLabel = New System.Windows.Forms.Label()
         Me.Count = New System.Windows.Forms.Label()
         Me.CountBox = New System.Windows.Forms.TextBox()
@@ -42,7 +44,9 @@ Partial Class DBA
         Me.VinTextBox = New System.Windows.Forms.TextBox()
         Me.FullVinComboBox = New System.Windows.Forms.ComboBox()
         Me.FlatButton1 = New ProductionLog.FlatButton()
+        Me.StockDGV = New System.Windows.Forms.DataGridView()
         Me.FormSkin1.SuspendLayout()
+        CType(Me.StockDGV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SuccessTimer
@@ -54,6 +58,9 @@ Partial Class DBA
         Me.FormSkin1.BackColor = System.Drawing.Color.White
         Me.FormSkin1.BaseColor = System.Drawing.Color.Gray
         Me.FormSkin1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(53, Byte), Integer), CType(CType(58, Byte), Integer), CType(CType(60, Byte), Integer))
+        Me.FormSkin1.Controls.Add(Me.StockDGV)
+        Me.FormSkin1.Controls.Add(Me.Label5)
+        Me.FormSkin1.Controls.Add(Me.Label4)
         Me.FormSkin1.Controls.Add(Me.BatchIDLabel)
         Me.FormSkin1.Controls.Add(Me.Count)
         Me.FormSkin1.Controls.Add(Me.CountBox)
@@ -77,9 +84,29 @@ Partial Class DBA
         Me.FormSkin1.HeaderMaximize = False
         Me.FormSkin1.Location = New System.Drawing.Point(0, 0)
         Me.FormSkin1.Name = "FormSkin1"
-        Me.FormSkin1.Size = New System.Drawing.Size(444, 341)
+        Me.FormSkin1.Size = New System.Drawing.Size(634, 341)
         Me.FormSkin1.TabIndex = 0
         Me.FormSkin1.Text = "Collateral Reception"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.BackColor = System.Drawing.Color.Transparent
+        Me.Label5.Location = New System.Drawing.Point(510, 50)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(48, 21)
+        Me.Label5.TabIndex = 21
+        Me.Label5.Text = "Stock"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.Location = New System.Drawing.Point(292, 50)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(45, 21)
+        Me.Label4.TabIndex = 20
+        Me.Label4.Text = "VINS"
         '
         'BatchIDLabel
         '
@@ -136,7 +163,7 @@ Partial Class DBA
         '
         Me.SuccessLabel.AutoSize = True
         Me.SuccessLabel.BackColor = System.Drawing.Color.LightGreen
-        Me.SuccessLabel.Location = New System.Drawing.Point(237, 9)
+        Me.SuccessLabel.Location = New System.Drawing.Point(271, 9)
         Me.SuccessLabel.Name = "SuccessLabel"
         Me.SuccessLabel.Size = New System.Drawing.Size(69, 21)
         Me.SuccessLabel.TabIndex = 14
@@ -236,7 +263,7 @@ Partial Class DBA
         Me.FlatButton1.BaseColor = System.Drawing.Color.DarkRed
         Me.FlatButton1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.FlatButton1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.FlatButton1.Location = New System.Drawing.Point(385, 0)
+        Me.FlatButton1.Location = New System.Drawing.Point(575, 0)
         Me.FlatButton1.Name = "FlatButton1"
         Me.FlatButton1.Rounded = False
         Me.FlatButton1.Size = New System.Drawing.Size(59, 27)
@@ -244,11 +271,19 @@ Partial Class DBA
         Me.FlatButton1.Text = "Done"
         Me.FlatButton1.TextColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         '
+        'StockDGV
+        '
+        Me.StockDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.StockDGV.Location = New System.Drawing.Point(445, 74)
+        Me.StockDGV.Name = "StockDGV"
+        Me.StockDGV.Size = New System.Drawing.Size(186, 255)
+        Me.StockDGV.TabIndex = 22
+        '
         'DBA
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(444, 341)
+        Me.ClientSize = New System.Drawing.Size(634, 341)
         Me.Controls.Add(Me.FormSkin1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -258,6 +293,7 @@ Partial Class DBA
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.FormSkin1.ResumeLayout(False)
         Me.FormSkin1.PerformLayout()
+        CType(Me.StockDGV, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -279,4 +315,7 @@ Partial Class DBA
     Friend WithEvents Count As System.Windows.Forms.Label
     Friend WithEvents CountBox As System.Windows.Forms.TextBox
     Friend WithEvents BatchIDLabel As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents StockDGV As System.Windows.Forms.DataGridView
 End Class

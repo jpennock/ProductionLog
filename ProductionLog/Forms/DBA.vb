@@ -93,8 +93,36 @@ Public Class DBA
                 End With
             End If
         Catch ex As Exception
+            MsgBox(ex.ToString & "  1")
+        End Try
+        'Try 'This is bad, just put a DGV in here and then put a column that shows active/inactive and call it a day. The list box thing is crappy.
+        '    Dim Query As String = "select Stock from vins where VIN='" & FullVinComboBox.SelectedValue & "'"
+        '    Dim StockTable As New DataTable
+        '    Dim StockAdapt As New MySqlDataAdapter(Query, SqlConnectionString)
+        '    StockAdapt.Fill(StockTable)
+        '    If ActiveStockListBox.Items.Count > 0 Then
+        '        For i = 0 To ActiveStockListBox.Items.Count - 1
+        '            ActiveStockListBox.Items.RemoveAt(i)
+        '        Next
+        '    End If
+        '    If StockTable.Rows.Count > 0 Then
+        '        For i = 0 To StockTable.Rows.Count - 1
+        '            ActiveStockListBox.Items.Add(StockTable.Rows(i)(0))
+        '        Next
+        '    End If
+        'Catch ex As Exception
+        '    MsgBox(ex.ToString & "  2")
+        'End Try
+        Try
+            Dim Query As String = "select Stock from vins where VIN='" & FullVinComboBox.SelectedValue & "'"
+            Dim Stocktable As New DataTable
+            Dim Stockadapt As New MySqlDataAdapter(Query, SqlConnectionString)
+            Stockadapt.Fill(Stocktable)
+            StockDGV.DataSource = Stocktable
+        Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
+
 
     End Sub
 

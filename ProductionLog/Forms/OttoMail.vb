@@ -154,8 +154,8 @@ Public Class OttoMail
                                 Dim eSubject As String = Message.Headers.Subject.ToString
                                 Dim esplit() As String = eSubject.Split(New Char() {" "c})
                                 Dim NowDate As String = DateTime.Now.ToString("yyyy MM dd")
-                                Dim thefile = esplit(0) & " " & msgpart.FileName & " " & NowDate
-                                thefolder = "P:\aaa-Raw Dealer Extract from DMS\"
+                                Dim thefile = NowDate & " " & esplit(0) & " " & msgpart.FileName
+                                thefolder = "P:\Scans\Attachments\"
                                 Dim filetype = msgpart.ContentType
                                 Dim contentid = msgpart.ContentId
                                 System.IO.Directory.CreateDirectory(thefolder)

@@ -407,9 +407,9 @@ Public Class Clerk
                         VarianceCheckBox.Checked = True
                         VariancePopUp.Show()
                         If IsDBNull(QAInfoTable.Rows(0)(6)) Then
-                            VariancePopUp.VarianceIssueLabel.Text = ""
+                            '.Text = ""
                         Else
-                            VariancePopUp.VarianceIssueLabel.Text = QAInfoTable.Rows(0)(6)
+                            'VariancePopUp.VarianceIssueLabel.Text = QAInfoTable.Rows(0)(6)
                         End If
                     Else
                         VarianceCheckBox.Checked = False
